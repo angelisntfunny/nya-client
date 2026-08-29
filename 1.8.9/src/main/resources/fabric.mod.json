@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "nyaclient",
   "version": "${version}",
   "name": "Example Mod",
-  "description": "Niko Client is a FOSS alternative to clients like Feather and Lunar.",
+  "description": "Nya Client is a FOSS alternative to other PVP clients.",
   "authors": [
     "Angel"
   ],
   "contact": {
-    "homepage": "https://github.com/angelisntfunny/niko-client",
-    "sources": "https://github.com/angelisntfunny/niko-client"
+    "homepage": "https://github.com/angelisntfunny/nya-client",
+    "sources": "https://github.com/angelisntfunny/nya-client"
   },
   "license": "CC0-1.0",
   "icon": "assets/modid/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "org.nikoclient.NikoClient"
+      "org.nyaclient.Nya"
     ]
   },
   "mixins": [
@@ -25,8 +25,5 @@
   "depends": {
     "fabricloader": ">=0.16.0",
     "minecraft": "1.8.9"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }

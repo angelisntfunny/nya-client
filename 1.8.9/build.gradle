@@ -12,35 +12,15 @@ base {
 }
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
+	mavenCentral()
 }
 
 loom {
-	// Only needed for versions not available from vanilla launcher by default.
-	// customMinecraftManifest.set("https://meta.legacyfabric.net/v2/manifest/${minecraft_version}")
 
-	// Required by 1.7.x
-	// runs {
-	// 	client {
-	// 		programArgs "--userProperties", "{}"
-	// 	}
-	// }
 }
 
 legacyLooming {
-	// 	The generation of intermediary to use, default is 1.
-	// 	legacy.yarn() will automatically point at the variant for the set intermediary generation.
-	// 	However do not forget to set the right build number of legacy yarn as they are different per variant.
-	//	intermediaryVersion = 2
 
-	// 	Wether to use Legacy Fabric intermediaries or Upstream/Official FabricMC ones.
-	//	Default to true: use Legacy Fabric intermediaries.
-	// 	If setting to false, don't forget to also set intermediaryVersion to generation 2.
-	//	useLFIntermediary.set(false)
 }
 
 dependencies {
@@ -48,15 +28,16 @@ dependencies {
 	mappings(legacy.yarn(project.minecraft_version, project.yarn_build))
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Legacy Fabric API provides hooks for events, item registration, and more. As most mods will need this, it's included by default.
-	// If you know for a fact you don't, it's not required and can be safely removed.
-	// As of September 2025, available only for intermediary generation 1.
-	// Check availability for your MC version at https://legacyfabric.net/usage.html
+
 	modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${project.fabric_version}"
-	// If you use LFAPI with MC 1.3.2, 1.4.7 or 1.5.2, uncomment the next line
 	// implementation('com.google.code.gson:gson:2.8.9')
 
-	// You can retrieve a specific api module using this notation.
+	compileOnly "org.projectlombok:lombok:1.18.46"
+	annotationProcessor "org.projectlombok:lombok:1.18.46"
+
+	testCompileOnly "org.projectlombok:lombok:1.18.46"
+	testAnnotationProcessor "org.projectlombok:lombok:1.18.46"
+
 	// modImplementation(legacy.apiModule("legacy-fabric-item-groups-v1", project.fabric_version))
 }
 
@@ -69,9 +50,6 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// Ensure that the encoding is set to UTF-8, no matter what the system default is
-	// this fixes some edge cases with special characters not displaying correctly
-	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 	it.options.encoding = "UTF-8"
 
 	if (JavaVersion.current().isJava9Compatible()) {
@@ -80,9 +58,6 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
 	sourceCompatibility = JavaVersion.VERSION_1_8
@@ -97,7 +72,6 @@ jar {
 	}
 }
 
-// configure the maven publication
 publishing {
 	publications {
 		create("mavenJava", MavenPublication) {
@@ -106,11 +80,6 @@ publishing {
 		}
 	}
 
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
 	}
 }

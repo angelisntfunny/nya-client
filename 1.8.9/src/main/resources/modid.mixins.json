@@ -1,11 +1,14 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.nikoclient.mixin",
+  "package": "org.nyaclient.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],
   "client": [
+    "ClientPlayerEntityMixin",
+    "GameRendererAccessor",
+    "KeyBindingInterface",
     "MinecraftMixin"
   ],
   "injectors": {
