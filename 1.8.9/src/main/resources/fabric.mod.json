@@ -11,8 +11,8 @@
     "homepage": "https://github.com/angelisntfunny/nya-client",
     "sources": "https://github.com/angelisntfunny/nya-client"
   },
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "GPL-3.0",
+  "icon": "assets/nyaclient/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -20,7 +20,7 @@
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "nyaclient.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.16.0",

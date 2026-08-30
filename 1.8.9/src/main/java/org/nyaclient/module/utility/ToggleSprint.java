@@ -15,7 +15,6 @@ public class ToggleSprint extends Mod {
 
     @Subscribe
     public void onUpdate(EventUpdate event) {
-//        mc.player.setSprinting(true);
         ((KeyBindingInterface) mc.options.sprintKey).setKeyPressed(true);
     }
 }

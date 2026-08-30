@@ -2,11 +2,8 @@ package org.nyaclient.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import org.lwjgl.input.Keyboard;
-import org.nyaclient.Nya;
 import org.nyaclient.NyaClient;
-import org.nyaclient.event.impl.EventUpdate;
-import org.nyaclient.gui.ModMenu;
-import org.nyaclient.utils.Logger;
+import org.nyaclient.gui.HUDPositioner;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,7 +18,7 @@ public class MinecraftMixin {
             NyaClient.getInstance().getModManager().onKey(i);
 
             if (NyaClient.getInstance().getModsConfigKeybind().isPressed()) {
-                MinecraftClient.getInstance().setScreen(new ModMenu());
+                MinecraftClient.getInstance().setScreen(new HUDPositioner());
             }
         }
     }
