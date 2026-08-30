@@ -6,7 +6,7 @@ import net.minecraft.client.MinecraftClient;
 import org.nyaclient.NyaClient;
 
 @Getter @Setter
-public class Mod {
+public class AbstractMod implements IMod {
     protected final String name;
     protected final String description;
     protected final ModCategory category;
@@ -16,7 +16,7 @@ public class Mod {
 
     protected boolean enabled;
 
-    public Mod(String name, String description, ModCategory category, int key) {
+    public AbstractMod(String name, String description, ModCategory category, int key) {
         this.name = name;
         this.description = description;
         this.category = category;

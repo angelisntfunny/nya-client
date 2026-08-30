@@ -8,35 +8,51 @@ import java.util.List;
 import java.util.Map;
 
 public class EventBus {
-    private final Map<Object, List<Method>> SUBSCRIBERS = new HashMap<>();
+    private final Map<Class<? extends Event>, List<SubscriberData>> SUBSCRIBERS = new HashMap<>();
 
     public EventBus() {}
 
     public void call(Event event) {
-        SUBSCRIBERS.forEach((object, methods) -> {
-            for (Method m : methods) {
-                m.setAccessible(true);
-                try {
-                    m.invoke(object, event);
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-    }
+        List<SubscriberData> dataList = SUBSCRIBERS.get(event.getClass());
+        if (dataList == null) return;
 
-    public void remove(Object obj) {
-        SUBSCRIBERS.remove(obj);
+        for (SubscriberData data : dataList) {
+            try {
+                data.method.invoke(data.instance, event);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                throw new RuntimeException("Failed to invoke event handler", e);
+            }
+        }
     }
 
     public void register(Object object) {
-        List<Method> methods = new ArrayList<>();
         for (Method m : object.getClass().getDeclaredMethods()) {
-            System.out.println();
-            if (m.isAnnotationPresent(Subscribe.class) && m.getParameterCount() == 1 && Event.class.isAssignableFrom(m.getParameterTypes()[0])) {
-                methods.add(m);
+            if (m.isAnnotationPresent(Subscribe.class) && m.getParameterCount() == 1) {
+                Class<?> paramType = m.getParameterTypes()[0];
+
+                if (Event.class.isAssignableFrom(paramType)) {
+                    @SuppressWarnings("unchecked")
+                    Class<? extends Event> eventClass = (Class<? extends Event>) paramType;
+
+                    m.setAccessible(true);
+                    SUBSCRIBERS.computeIfAbsent(eventClass, k -> new ArrayList<>())
+                            .add(new SubscriberData(object, m));
+                }
             }
         }
-        SUBSCRIBERS.put(object, methods);
+    }
+
+    public void remove(Object obj) {
+        SUBSCRIBERS.values().forEach(list -> list.removeIf(data -> data.instance == obj));
+    }
+
+    private static class SubscriberData {
+        final Object instance;
+        final Method method;
+
+        SubscriberData(Object instance, Method method) {
+            this.instance = instance;
+            this.method = method;
+        }
     }
 }

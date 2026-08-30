@@ -8,6 +8,7 @@ import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
 import org.nyaclient.NyaClient;
 import org.nyaclient.mixin.GameRendererAccessor;
+import org.nyaclient.module.HUDMod;
 import org.nyaclient.utils.TextUtils;
 
 import java.awt.*;
@@ -33,6 +34,10 @@ public class HUDPositioner extends Screen {
     @Override
     public void render(int mouseX, int mouseY, float tickDelta) {
         DrawableHelper.fill(0, 0, window.getWidth(), window.getHeight(), new Color(0, 0, 0, 110).getRGB());
+
+        NyaClient.getInstance().getModManager().getHUDMods().forEach(HUDMod::render);
+        NyaClient.getInstance().getModManager().getHUDMods().forEach(m -> m.drag(mouseX, mouseY));
+
         DrawableHelper.fill(window.getWidth() / 2 - 45,window.getHeight() / 2 - 15,window.getWidth() / 2 + 45,window.getHeight() / 2 + 15, new Color(32, 32, 32, 255).getRGB());
 
         TextUtils.drawCenteredString(window.getWidth() / 2, window.getHeight() / 2, "Mods", -1);
@@ -45,5 +50,10 @@ public class HUDPositioner extends Screen {
             mc.gameRenderer.disableShader();
         }
         super.removed();
+    }
+
+    @Override
+    public boolean shouldPauseGame() {
+        return false;
     }
 }
