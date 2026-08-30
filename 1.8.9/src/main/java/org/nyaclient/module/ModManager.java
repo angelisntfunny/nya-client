@@ -1,6 +1,7 @@
 package org.nyaclient.module;
 
 import net.minecraft.client.MinecraftClient;
+import org.nyaclient.module.utility.Keystrokes;
 import org.nyaclient.module.utility.ToggleSprint;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class ModManager {
 
     public ModManager() {
         MODS.add(new ToggleSprint());
+        MODS.add(new Keystrokes());
     }
 
     public void onKey(int key) {

@@ -1,19 +1,16 @@
 package org.nyaclient.module.utility;
 
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.option.KeyBinding;
 import org.lwjgl.input.Keyboard;
 import org.nyaclient.event.Subscribe;
 import org.nyaclient.event.impl.EventKey;
 import org.nyaclient.event.impl.EventUpdate;
 import org.nyaclient.mixin.KeyBindingInterface;
-import org.nyaclient.module.AbstractMod;
 import org.nyaclient.module.HUDMod;
 import org.nyaclient.module.ModCategory;
-import org.nyaclient.utils.Draw2D;
+import org.nyaclient.utils.Colors;
 import org.nyaclient.utils.TextUtils;
 
-// TODO: make this actually togglesprint
 public class ToggleSprint extends HUDMod {
     private boolean toggleSprint = false;
 
@@ -65,7 +62,7 @@ public class ToggleSprint extends HUDMod {
 
     @Override
     public void render() {
-        DrawableHelper.fill(x - 2, y - 2, x + getWidth() + 2, y + getHeight() + 2, 0x70000000);
+        DrawableHelper.fill(x - 2, y - 2, x + getWidth() + 2, y + getHeight() + 2, Colors.DARK_GREY);
 
         TextUtils.drawString(getX() + 2, getY() + 2, "[Sprinting: " + getMode(), -1);
     }
