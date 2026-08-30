@@ -14,6 +14,13 @@ import org.nyaclient.utils.TextUtils;
 public class ToggleSprint extends HUDMod {
     private boolean toggleSprint = false;
 
+
+    @Override
+    public void onDisable() {
+        ((KeyBindingInterface) mc.options.sprintKey).setKeyPressed(Keyboard.isKeyDown(mc.options.sprintKey.getCode()));
+        super.onDisable();
+    }
+
     private String getMode() {
         String sprintingState = "Vanilla]";
 
