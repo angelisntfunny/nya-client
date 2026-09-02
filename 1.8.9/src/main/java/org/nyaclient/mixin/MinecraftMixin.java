@@ -12,6 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MinecraftClient.class)
 public class MinecraftMixin {
+
+    @Inject(method = "initializeGame", at = @At("TAIL"))
+    private void initializeGame(CallbackInfo ci) {
+        NyaClient.getInstance().onLoad();
+    }
+
     @Inject(method = "handleKeyInput", at = @At("HEAD"))
     private void handleKeyInput(CallbackInfo ci) {
         final int i = (Keyboard.getEventKey() == 0) ? Keyboard.getEventCharacter() : Keyboard.getEventKey();

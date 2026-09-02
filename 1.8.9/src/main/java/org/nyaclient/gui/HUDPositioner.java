@@ -5,11 +5,10 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.util.Identifier;
-import org.lwjgl.opengl.GL11;
 import org.nyaclient.NyaClient;
 import org.nyaclient.mixin.GameRendererAccessor;
 import org.nyaclient.module.HUDMod;
-import org.nyaclient.utils.TextUtils;
+import org.nyaclient.utils.FontRenderer;
 
 import java.awt.*;
 
@@ -40,7 +39,9 @@ public class HUDPositioner extends Screen {
 
         DrawableHelper.fill(window.getWidth() / 2 - 45,window.getHeight() / 2 - 15,window.getWidth() / 2 + 45,window.getHeight() / 2 + 15, new Color(32, 32, 32, 255).getRGB());
 
-        TextUtils.drawCenteredString(window.getWidth() / 2, window.getHeight() / 2, "Mods", -1);
+//        TextUtils.drawCenteredString(window.getWidth() / 2, window.getHeight() / 2, "Mods", -1);
+        FontRenderer.renderText(10, 10, "hi");
+
         super.render(mouseX, mouseY, tickDelta);
     }
 

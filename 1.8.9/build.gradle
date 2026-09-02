@@ -1,7 +1,13 @@
+import org.gradle.internal.os.OperatingSystem
+
 plugins {
 	id "net.fabricmc.fabric-loom-remap" version "${loom_version}"
 	id "legacy-looming" version "${loom_version}" // Version must be the same as fabric-loom's
 	id "maven-publish"
+}
+
+ext {
+	lwjglVersion = "3.3.2"
 }
 
 version = project.mod_version
@@ -13,6 +19,7 @@ base {
 
 repositories {
 	mavenCentral()
+	maven { url = 'https://jitpack.io' }
 }
 
 loom {
@@ -21,6 +28,33 @@ loom {
 
 legacyLooming {
 
+}
+
+//project.ext.lwjglVersion = project.findProperty('lwjgl_version')
+
+def currentOs = OperatingSystem.current()
+
+if (currentOs.isLinux()) {
+	project.ext.lwjglNatives = "natives-linux"
+	def osArch = System.getProperty("os.arch")
+	if (osArch.startsWith("arm") || osArch.startsWith("aarch64")) {
+		project.ext.lwjglNatives += osArch.contains("64") || osArch.startsWith("armv8") ? "-arm64" : "-arm32"
+	} else if (osArch.startsWith("ppc")) {
+		project.ext.lwjglNatives += "-ppc64le"
+	} else if (osArch.startsWith("riscv")) {
+		project.ext.lwjglNatives += "-riscv64"
+	}
+} else if (currentOs.isMacOsX()) {
+	project.ext.lwjglNatives = "natives-macos"
+	def osArch = System.getProperty("os.arch")
+	if (osArch.startsWith("aarch64")) {
+		project.ext.lwjglNatives += "-arm64"
+	}
+} else if (currentOs.isWindows()) {
+	def osArch = System.getProperty("os.arch")
+	project.ext.lwjglNatives = osArch.contains("64")
+			? "natives-windows${osArch.startsWith("aarch64") ? "-arm64" : ""}"
+			: "natives-windows-x86"
 }
 
 dependencies {
@@ -38,8 +72,16 @@ dependencies {
 	testCompileOnly "org.projectlombok:lombok:1.18.46"
 	testAnnotationProcessor "org.projectlombok:lombok:1.18.46"
 
-	implementation "org.slick2d:slick2d-core:1.0.2"
-	include "org.slick2d:slick2d-core:1.0.2"
+	// nanovg stuff
+	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+
+	implementation "io.waterwave.Legacy-LWJGL3:lwjgl:$lwjglVersion-5"
+	implementation "io.waterwave.Legacy-LWJGL3:lwjgl-stb:$project.ext.lwjglVersion-5"
+	implementation "io.waterwave.Legacy-LWJGL3:lwjgl-nanovg:$project.ext.lwjglVersion-5"
+
+	runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl-nanovg::$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
 
 	// modImplementation(legacy.apiModule("legacy-fabric-item-groups-v1", project.fabric_version))
 }
