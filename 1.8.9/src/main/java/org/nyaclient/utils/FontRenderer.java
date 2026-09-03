@@ -10,17 +10,17 @@ import org.lwjgl.system.MemoryUtil;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class FontRenderer {
-    private static final AtomicReference<ByteBuffer> fontBuffer = new AtomicReference<ByteBuffer>();
+    @SuppressWarnings("FieldCanBeLocal") // no this field can't be local
+    private static ByteBuffer fontBuffer;
     private static int fontId = -1;
     private static final String fontName = "Inter.ttf";
 
     public static void initFont(long nvgContext, String resourcePath) throws IOException {
-        fontBuffer.set(ioResourceToByteBuffer(resourcePath));
+        fontBuffer = ioResourceToByteBuffer(resourcePath);
 
-        fontId = NanoVG.nvgCreateFontMem(nvgContext, fontName, fontBuffer.get(), false);
+        fontId = NanoVG.nvgCreateFontMem(nvgContext, fontName, fontBuffer, false);
 
         if (fontId == -1) {
             throw new RuntimeException("Failed to register font.");
@@ -31,8 +31,14 @@ public class FontRenderer {
         if (fontId == -1) return;
 
         Window window = new Window(MinecraftClient.getInstance());
+
+        int framebufferWidth = MinecraftClient.getInstance().getFramebuffer().viewportWidth;
+        int width = window.getWidth();
+        int height = window.getHeight();
+
+        float pixelRatio = (float) framebufferWidth / (float) width;
         GlStateManager.pushMatrix();
-        NanoVG.nvgBeginFrame(NanoVGManager.getNvgContext(), window.getWidth(), window.getHeight(), 1.0f);
+        NanoVG.nvgBeginFrame(NanoVGManager.getNvgContext(), width, height, pixelRatio);
 
         NanoVG.nvgFontFace(NanoVGManager.getNvgContext(), fontName);
         NanoVG.nvgFontSize(NanoVGManager.getNvgContext(), size);

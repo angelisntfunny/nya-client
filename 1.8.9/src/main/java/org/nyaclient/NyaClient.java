@@ -25,33 +25,6 @@ public class NyaClient {
         FontRenderer.initFont(NanoVGManager.getNvgContext(), "/assets/nyaclient/Inter.ttf");
     }
 
-//    private UnicodeFont interFontNormal;
-
-//    private void loadFonts() {
-//        try {
-//            Font awtFont = Font.createFont(
-//                    Font.TRUETYPE_FONT,
-//                    org.newdawn.slick.util.ResourceLoader.getResourceAsStream("assets/nyaclient/Inter.ttf")
-//            );
-//
-//            awtFont = awtFont.deriveFont(Font.PLAIN, 19f);
-//
-//            interFontNormal = new UnicodeFont(awtFont);
-//            interFontNormal.getEffects().add(new ColorEffect(Color.WHITE));
-//            interFontNormal.addAsciiGlyphs();
-//            interFontNormal.loadGlyphs();
-//        } catch (FontFormatException | IOException | SlickException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    public UnicodeFont getInterFontNormal() {
-//        if (interFontNormal == null) {
-//            loadFonts();
-//        }
-//        return interFontNormal;
-//    }
-
     public static NyaClient getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new NyaClient();

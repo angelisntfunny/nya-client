@@ -40,7 +40,7 @@ public class HUDPositioner extends Screen {
         DrawableHelper.fill(window.getWidth() / 2 - 45,window.getHeight() / 2 - 15,window.getWidth() / 2 + 45,window.getHeight() / 2 + 15, new Color(32, 32, 32, 255).getRGB());
 
 //        TextUtils.drawCenteredString(window.getWidth() / 2, window.getHeight() / 2, "Mods", -1);
-        FontRenderer.renderText(10, 10, "hi");
+        FontRenderer.renderText(150, 150, "hi");
 
         super.render(mouseX, mouseY, tickDelta);
     }
