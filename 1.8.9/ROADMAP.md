@@ -1,3 +1,3 @@
 # Roadmap
 
-- [ ] Add custom fonts.
+- [x] Add custom fonts.
