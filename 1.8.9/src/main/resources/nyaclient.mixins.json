@@ -9,10 +9,13 @@
   "client": [
     "ClientPlayerEntityMixin",
     "GameRendererAccessor",
+    "GameRendererMixin",
+    "HeldItemRendererMixin",
     "InGameHudMixin",
     "KeyBindingInterface",
     "MinecraftInterface",
-    "MinecraftMixin"
+    "MinecraftMixin",
+    "TNTEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

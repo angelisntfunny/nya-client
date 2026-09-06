@@ -1,8 +1,11 @@
 package org.nyaclient.module;
 
 import net.minecraft.client.MinecraftClient;
+import org.nyaclient.module.utility.Fullbright;
 import org.nyaclient.module.utility.Keystrokes;
 import org.nyaclient.module.utility.ToggleSprint;
+import org.nyaclient.module.visuals.TNTTimer;
+import org.nyaclient.module.visuals.VisualTweaks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +17,18 @@ public class ModManager {
     public ModManager() {
         MODS.add(new ToggleSprint());
         MODS.add(new Keystrokes());
+        MODS.add(new VisualTweaks());
+        MODS.add(new Fullbright());
+        MODS.add(new TNTTimer());
     }
 
     public void onKey(int key) {
         if (MinecraftClient.getInstance().player == null || MinecraftClient.getInstance().world == null) return;
         MODS.stream().filter(m -> m.getKey() == key).forEach(IMod::toggle);
+    }
+
+    public <T> T getMod(Class<T> clazz) {
+        return MODS.stream().filter(m -> m.getClass().equals(clazz)).map(clazz::cast).findFirst().orElse(null);
     }
 
     public List<HUDMod> getHUDMods() {
