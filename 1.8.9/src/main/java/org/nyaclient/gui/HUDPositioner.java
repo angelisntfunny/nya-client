@@ -9,6 +9,7 @@ import org.nyaclient.NyaClient;
 import org.nyaclient.mixin.GameRendererAccessor;
 import org.nyaclient.module.HUDMod;
 import org.nyaclient.utils.FontRenderer;
+import org.nyaclient.utils.NanoVGManager;
 
 import java.awt.*;
 
@@ -37,10 +38,12 @@ public class HUDPositioner extends Screen {
         NyaClient.getInstance().getModManager().getHUDMods().forEach(HUDMod::render);
         NyaClient.getInstance().getModManager().getHUDMods().forEach(m -> m.drag(mouseX, mouseY));
 
-        DrawableHelper.fill(window.getWidth() / 2 - 45,window.getHeight() / 2 - 15,window.getWidth() / 2 + 45,window.getHeight() / 2 + 15, new Color(32, 32, 32, 255).getRGB());
+        NanoVGManager.render(() -> {
+            NanoVGManager.drawRoundedRect((float) window.getWidth() / 2 - 45, (float) window.getHeight() / 2 - 15, 90, 30, 5, new Color(0, 0, 0, 80));
+            FontRenderer.renderCenteredText(15, window.getWidth() / 2.0f,
+                    window.getHeight() / 2.0f, "Mods", new Color(255, 255, 255, 255));
 
-//        TextUtils.drawCenteredString(window.getWidth() / 2, window.getHeight() / 2, "Mods", -1);
-        FontRenderer.renderText(150, 150, "hi");
+        });
 
         super.render(mouseX, mouseY, tickDelta);
     }

@@ -15,6 +15,7 @@
     "KeyBindingInterface",
     "MinecraftInterface",
     "MinecraftMixin",
+    "TitleScreenMixin",
     "TNTEntityRendererMixin"
   ],
   "injectors": {
