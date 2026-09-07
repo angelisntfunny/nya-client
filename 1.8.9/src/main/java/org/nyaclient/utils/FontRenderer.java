@@ -53,7 +53,7 @@ public class FontRenderer {
 
 
 
-    public static void renderText(float size, float x, float y, String text) {
+    public static void renderText(float size, float x, float y, String text, Color color) {
         if (fontId == -1) return;
 
         MinecraftClient client = MinecraftClient.getInstance();
@@ -64,15 +64,16 @@ public class FontRenderer {
 
         float pixelRatio = (float) framebufferWidth / (float) width;
 
-        size = pixelRatio * size;
+//        size = pixelRatio * size;
 
+        NanoVG.nvgFillColor(NanoVGManager.getNvgContext(), NanoVGManager.getColor(color));
         NanoVG.nvgFontFace(NanoVGManager.getNvgContext(), fontName);
         NanoVG.nvgFontSize(NanoVGManager.getNvgContext(), size);
         NanoVG.nvgText(NanoVGManager.getNvgContext(), x, y, text);
     }
 
     public static void renderText(float x, float y, String text) {
-        renderText(24.0F, x, y, text);
+        renderText(24.0F, x, y, text, Color.WHITE);
     }
 
     public static float getTextWidth(float size, String text) {
@@ -85,7 +86,7 @@ public class FontRenderer {
         int width = window.getWidth();
 
         float pixelRatio = (float) framebufferWidth / (float) width;
-        size *= pixelRatio;
+//        size *= pixelRatio;
 
         NanoVG.nvgFontFace(NanoVGManager.getNvgContext(), fontName);
         NanoVG.nvgFontSize(NanoVGManager.getNvgContext(), size);

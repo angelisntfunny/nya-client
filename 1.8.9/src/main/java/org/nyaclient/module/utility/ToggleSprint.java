@@ -9,7 +9,11 @@ import org.nyaclient.mixin.KeyBindingInterface;
 import org.nyaclient.module.HUDMod;
 import org.nyaclient.module.ModCategory;
 import org.nyaclient.utils.Colors;
+import org.nyaclient.utils.FontRenderer;
+import org.nyaclient.utils.NanoVGManager;
 import org.nyaclient.utils.TextUtils;
+
+import java.awt.*;
 
 public class ToggleSprint extends HUDMod {
     private boolean toggleSprint = false;
@@ -69,9 +73,9 @@ public class ToggleSprint extends HUDMod {
 
     @Override
     public void render() {
-        DrawableHelper.fill(x - 2, y - 2, x + getWidth() + 2, y + getHeight() + 2, Colors.DARK_GREY);
+        NanoVGManager.drawRoundedRect(x - 2, y - 2, getWidth() + 2, getHeight() + 2, 3, Colors.DARK_GREY);
 
-        TextUtils.drawString(getX() + 2, getY() + 2, "[Sprinting: " + getMode(), -1);
+        FontRenderer.renderText(10, getX() + 2, getY() + getHeight()/2f + 2, "[Sprinting: " + getMode(), Color.WHITE);
     }
 
 

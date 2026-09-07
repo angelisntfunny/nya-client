@@ -3,6 +3,7 @@ package org.nyaclient.mixin;
 import net.minecraft.client.gui.hud.InGameHud;
 import org.nyaclient.NyaClient;
 import org.nyaclient.module.HUDMod;
+import org.nyaclient.utils.NanoVGManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class InGameHudMixin {
     @Inject(method = "render", at = @At("TAIL"))
     private void renderTail(float tickDelta, CallbackInfo ci) {
-        NyaClient.getInstance().getModManager().getHUDMods().forEach(HUDMod::render);
+        NanoVGManager.render(() -> {
+            NyaClient.getInstance().getModManager().getHUDMods().forEach(HUDMod::render);
+        });
     }
 }

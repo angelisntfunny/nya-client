@@ -6,7 +6,11 @@ import org.lwjgl.input.Keyboard;
 import org.nyaclient.module.HUDMod;
 import org.nyaclient.module.ModCategory;
 import org.nyaclient.utils.Colors;
+import org.nyaclient.utils.FontRenderer;
+import org.nyaclient.utils.NanoVGManager;
 import org.nyaclient.utils.TextUtils;
+
+import java.awt.*;
 
 public class Keystrokes extends HUDMod {
     public Keystrokes() {
@@ -34,7 +38,7 @@ public class Keystrokes extends HUDMod {
 
     @Override
     public int getHeight() {
-        return 80;
+        return 83;
     }
 
     @Override
@@ -48,31 +52,31 @@ public class Keystrokes extends HUDMod {
         KeyBinding jump = mc.options.jumpKey;
 
         // forward
-        DrawableHelper.fill(x + 20, y, x + 40, y + 20, forward.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
-        TextUtils.drawCenteredString(x + 30, y + 10, getKeyName(forward), -1);
+        NanoVGManager.drawRoundedRect(x + 20, y, 20, 20, 2.5f, forward.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
+        FontRenderer.renderCenteredText(10, x + 30, y + 10, getKeyName(forward), Color.WHITE);
 
         // left
-        DrawableHelper.fill(x - 1, y + 22, x + 19, y + 42, left.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
-        TextUtils.drawCenteredString(x + 9, y + 32, getKeyName(left), -1);
+        NanoVGManager.drawRoundedRect(x - 1, y + 22, 20, 20, 2.5f, left.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
+        FontRenderer.renderCenteredText(10, x + 9, y + 32, getKeyName(left), Color.WHITE);
 
         // backward
-        DrawableHelper.fill(x + 20, y + 22, x + 40, y + 42, backward.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
-        TextUtils.drawCenteredString(x + 30, y + 32, getKeyName(backward), -1);
+        NanoVGManager.drawRoundedRect(x + 20, y + 22, 20, 20, 2.5f, backward.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
+        FontRenderer.renderCenteredText(10, x + 30, y + 32, getKeyName(backward), Color.WHITE);
 
         // right
-        DrawableHelper.fill(x + 42, y + 22, x + 62, y + 42, right.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
-        TextUtils.drawCenteredString(x + 52, y + 32, getKeyName(right), -1);
+        NanoVGManager.drawRoundedRect(x + 42, y + 22, 20, 20, 2.5f, right.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
+        FontRenderer.renderCenteredText(10, x + 52, y + 32, getKeyName(right), Color.WHITE);
 
         // attack
-        DrawableHelper.fill(x - 1, y + 44, x + 29, y + 64, attack.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
-        TextUtils.drawCenteredString(x + 15, y + 54, getKeyName(attack), -1);
+        NanoVGManager.drawRoundedRect(x - 1, y + 44, 30, 20, 2.5f, attack.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
+        FontRenderer.renderCenteredText(10, x + 15, y + 54, getKeyName(attack), Color.WHITE);
 
         // build
-        DrawableHelper.fill(x + 31, y + 44, x + 62, y + 64, use.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
-        TextUtils.drawCenteredString(x + 47, y + 54, getKeyName(use), -1);
+        NanoVGManager.drawRoundedRect(x + 31, y + 44, 31, 20, 2.5f, use.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
+        FontRenderer.renderCenteredText(10, x + 47, y + 54, getKeyName(use), Color.WHITE);
 
         // jump
-        DrawableHelper.fill(x - 1, y + 66, x + 62, y + 84, jump.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
-        TextUtils.drawCenteredString(x + 30, y + 76, getKeyName(jump), -1);
+        NanoVGManager.drawRoundedRect(x - 1, y + 66, 63, 18, 2.5f, jump.isPressed() ? Colors.LIGHT_GREY : Colors.DARK_GREY);
+        FontRenderer.renderCenteredText(10, x + 30, y + 76, getKeyName(jump), Color.WHITE);
     }
 }

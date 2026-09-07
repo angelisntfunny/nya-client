@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "nyaclient",
   "version": "${version}",
-  "name": "Example Mod",
+  "name": "Nya Client",
   "description": "Nya Client is a FOSS alternative to other PVP clients.",
   "authors": [
     "Angel"
