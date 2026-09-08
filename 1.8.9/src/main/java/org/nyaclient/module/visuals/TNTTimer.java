@@ -8,7 +8,9 @@ import org.nyaclient.module.ModCategory;
  * @see org.nyaclient.mixin.TNTEntityRendererMixin
  */
 public class TNTTimer extends AbstractMod {
+    public static TNTTimer instance;
     public TNTTimer() {
         super("TNT Timer", "hi", ModCategory.VISUALS, Keyboard.KEY_B);
+        instance = this;
     }
 }

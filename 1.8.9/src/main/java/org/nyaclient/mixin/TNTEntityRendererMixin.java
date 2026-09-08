@@ -10,6 +10,7 @@ import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.TntEntityRenderer;
 import net.minecraft.entity.TntEntity;
 import org.lwjgl.opengl.GL11;
+import org.nyaclient.module.visuals.TNTTimer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,6 +30,8 @@ public abstract class TNTEntityRendererMixin extends EntityRenderer<TntEntity> {
 
     @Inject(method = "render(Lnet/minecraft/entity/TntEntity;DDDFF)V", at = @At("RETURN"))
     protected void onRenderTnt(TntEntity entity, double x, double y, double z, float yaw, float tickDelta, CallbackInfo callback) {
+        if (!TNTTimer.instance.isEnabled()) return;
+
         String text = decimalFormat.format((float) entity.fuseTimer / 20);
         float maxDistance = 64;
         double d = entity.squaredDistanceTo(this.dispatcher.field_11098);
