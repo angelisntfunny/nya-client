@@ -10,7 +10,6 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.texture.NativeImageBackedTexture;
-import net.minecraft.client.util.Window;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
@@ -30,9 +29,10 @@ public class NyaTitleScreen extends Screen {
             new Identifier("nyaclient", "panorama/panorama_5.png")
     };
 
+    @SuppressWarnings("FieldCanBeLocal")
     private NativeImageBackedTexture backgroundTexture;
     private Identifier backgroundTextureId;
-    private int ticks = 0;
+    private int ticks;
 
     public NyaTitleScreen() {
         ticks = 0;
@@ -55,7 +55,7 @@ public class NyaTitleScreen extends Screen {
     protected void mouseClicked(int mouseX, int mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             float buttonY = height / 2.0F + i * 30.0f;
             float x = width / 2.0F - 50.0f;
 
@@ -64,15 +64,17 @@ public class NyaTitleScreen extends Screen {
                     MinecraftClient.getInstance().setScreen(new SelectWorldScreen(this));
                 } else if (i == 1) {
                     MinecraftClient.getInstance().setScreen(new MultiplayerScreen(this));
-                } else {
+                } else if (i == 2) {
                     // why in the fuck does this need the game settings just get it yourself bro
                     MinecraftClient.getInstance().setScreen(new SettingsScreen(this, MinecraftClient.getInstance().options));
+                } else {
+                    client.stop();
                 }
             }
         }
     }
 
-    private void renderPanorama(int mouseX, int mouseY, float tickDelta) {
+    private void renderPanorama(float tickDelta) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
         GlStateManager.matrixMode(5889);
@@ -126,7 +128,6 @@ public class NyaTitleScreen extends Screen {
                 this.client.getTextureManager().bindTexture(PANORAMA_CUBE_FACES[k]);
                 bufferBuilder.begin(7, VertexFormats.POSITION_TEXTURE_COLOR);
                 int l = 255 / (j + 1);
-                float m = 0.0F;
                 bufferBuilder.vertex(-1.0, -1.0, 1.0).texture(0.0, 0.0).color(255, 255, 255, l).next();
                 bufferBuilder.vertex(1.0, -1.0, 1.0).texture(1.0, 0.0).color(255, 255, 255, l).next();
                 bufferBuilder.vertex(1.0, 1.0, 1.0).texture(1.0, 1.0).color(255, 255, 255, l).next();
@@ -150,7 +151,7 @@ public class NyaTitleScreen extends Screen {
         GlStateManager.enableDepthTest();
     }
 
-    private void transformPanorama(float tickDelta) {
+    private void transformPanorama() {
         this.client.getTextureManager().bindTexture(this.backgroundTextureId);
         GL11.glTexParameteri(3553, 10241, 9729);
         GL11.glTexParameteri(3553, 10240, 9729);
@@ -168,7 +169,7 @@ public class NyaTitleScreen extends Screen {
             float f = 1.0F / (j + 1);
             int k = this.width;
             int l = this.height;
-            float g = (j - i / 2) / 256.0F;
+            float g = (j - (float) i / 2) / 256.0F;
             bufferBuilder.vertex(k, l, this.zOffset).texture(0.0F + g, 1.0).color(1.0F, 1.0F, 1.0F, f).next();
             bufferBuilder.vertex(k, 0.0, this.zOffset).texture(1.0F + g, 1.0).color(1.0F, 1.0F, 1.0F, f).next();
             bufferBuilder.vertex(0.0, 0.0, this.zOffset).texture(1.0F + g, 0.0).color(1.0F, 1.0F, 1.0F, f).next();
@@ -180,17 +181,17 @@ public class NyaTitleScreen extends Screen {
         GlStateManager.colorMask(true, true, true, true);
     }
 
-    private void renderBackground(int mouseX, int mouseY, float tickDelta) {
+    private void renderBackground(float tickDelta) {
         this.client.getFramebuffer().unbind();
         GlStateManager.viewport(0, 0, 256, 256);
-        this.renderPanorama(mouseX, mouseY, tickDelta);
-        this.transformPanorama(tickDelta);
-        this.transformPanorama(tickDelta);
-        this.transformPanorama(tickDelta);
-        this.transformPanorama(tickDelta);
-        this.transformPanorama(tickDelta);
-        this.transformPanorama(tickDelta);
-        this.transformPanorama(tickDelta);
+        this.renderPanorama(tickDelta);
+        this.transformPanorama();
+        this.transformPanorama();
+        this.transformPanorama();
+        this.transformPanorama();
+        this.transformPanorama();
+        this.transformPanorama();
+        this.transformPanorama();
         this.client.getFramebuffer().bind(true);
         GlStateManager.viewport(0, 0, this.client.width, this.client.height);
         float f = this.width > this.height ? 120.0F / this.width : 120.0F / this.height;
@@ -210,13 +211,13 @@ public class NyaTitleScreen extends Screen {
 
     @Override
     public void render(int mouseX, int mouseY, float tickDelta) {
-        this.renderBackground(mouseX, mouseY, tickDelta);
-        MinecraftClient mc = MinecraftClient.getInstance();
+        this.renderBackground(tickDelta);
+//        MinecraftClient mc = MinecraftClient.getInstance();
 
         NanoVGManager.render(() -> {
             FontRenderer.renderCenteredText(24, this.width / 2.0F, this.height / 2.0F - 50, "Nya", new Color(255, 255, 255));
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 float buttonY = height / 2.0F + i * 30.0f;
 
                 NanoVGManager.drawRoundedRect(
@@ -228,7 +229,8 @@ public class NyaTitleScreen extends Screen {
                         new Color(0, 0, 0, 170)
                 );
 
-                String label = i == 0 ? "Singleplayer" : (i == 1 ? "Multiplayer": "Settings");
+                // java 8 doesn't have switches so I need to do this fuckery
+                String label = i == 0 ? "Singleplayer" : (i == 1 ? "Multiplayer": (i == 2 ? "Settings" : "Quit"));
 
                 FontRenderer.renderCenteredText(
                         12,
