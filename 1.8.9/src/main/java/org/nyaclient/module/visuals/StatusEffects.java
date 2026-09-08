@@ -96,7 +96,7 @@ public class StatusEffects extends HUDMod {
 
     @Override
     public int getWidth() {
-        return 100;
+        return 115;
     }
 
     @Override
