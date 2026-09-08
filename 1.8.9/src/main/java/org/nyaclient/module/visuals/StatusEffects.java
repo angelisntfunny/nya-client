@@ -27,6 +27,7 @@ public class StatusEffects extends HUDMod {
     }
 
     private void drawEffects() {
+        GlStateManager.pushMatrix();
         int i = this.x;
         int j = this.y;
         int k = 166;
@@ -45,7 +46,7 @@ public class StatusEffects extends HUDMod {
                 l = 132 / (collection.size() - 1);
             }
 
-            for(StatusEffectInstance statusEffectInstance : collection) {
+            for (StatusEffectInstance statusEffectInstance : collection) {
                 StatusEffect statusEffect = StatusEffect.STATUS_EFFECTS[statusEffectInstance.getEffectId()];
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 MinecraftClient.getInstance().getTextureManager().bindTexture(INVENTORY_TEXTURE);
@@ -70,6 +71,7 @@ public class StatusEffects extends HUDMod {
                 j += l;
             }
         }
+        GlStateManager.popMatrix();
     }
 
     @Override
