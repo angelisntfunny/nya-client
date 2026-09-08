@@ -35,7 +35,6 @@ public class StatusEffects extends HUDMod {
         if (collection.isEmpty() && mc.currentScreen instanceof HUDPositioner) {
             collection = new ArrayList<>();
             collection.add(new StatusEffectInstance(5, 1200, 1, false, true));
-            System.out.println(collection);
         }
 
         if (!collection.isEmpty()) {
@@ -70,7 +69,6 @@ public class StatusEffects extends HUDMod {
                 MinecraftClient.getInstance().textRenderer.draw(string2, i + 10 + 18, j + 6 + 10, 8355711);
                 j += l;
             }
-
         }
     }
 
