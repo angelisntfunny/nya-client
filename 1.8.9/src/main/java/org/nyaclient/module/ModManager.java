@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import org.nyaclient.module.utility.Fullbright;
 import org.nyaclient.module.utility.Keystrokes;
 import org.nyaclient.module.utility.ToggleSprint;
+import org.nyaclient.module.visuals.StatusEffects;
 import org.nyaclient.module.visuals.TNTTimer;
 import org.nyaclient.module.visuals.VisualTweaks;
 
@@ -20,6 +21,7 @@ public class ModManager {
         MODS.add(new VisualTweaks());
         MODS.add(new Fullbright());
         MODS.add(new TNTTimer());
+        MODS.add(new StatusEffects());
     }
 
     public void onKey(int key) {
