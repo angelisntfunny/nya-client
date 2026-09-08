@@ -6,6 +6,7 @@ import org.nyaclient.event.impl.EventUpdate;
 import org.nyaclient.module.AbstractMod;
 import org.nyaclient.module.ModCategory;
 
+// TODO: add lerp to the zoom to make it animated
 public class ZoomMod extends AbstractMod {
     public static ZoomMod instance;
     public ZoomMod() {
