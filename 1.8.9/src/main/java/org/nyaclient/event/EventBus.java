@@ -16,7 +16,7 @@ public class EventBus {
         List<SubscriberData> dataList = SUBSCRIBERS.get(event.getClass());
         if (dataList == null) return;
 
-        for (SubscriberData data : dataList) {
+        for (SubscriberData data : new ArrayList<>(dataList)) {
             try {
                 data.method.invoke(data.instance, event);
             } catch (IllegalAccessException | InvocationTargetException e) {
