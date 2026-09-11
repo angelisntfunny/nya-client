@@ -77,4 +77,13 @@ public class NanoVGManager {
         NanoVG.nvgClosePath(nvgContext);
     }
 
+    // horrible ass name but roundedrectvarying sucks too
+    public static void drawRoundedRectSpecifyRadius(float x, float y, float width, float height, float topLeft, float topRight, float bottomRight, float bottomLeft, Color color) {
+        NanoVG.nvgBeginPath(nvgContext);
+        NanoVG.nvgRoundedRectVarying(nvgContext, x, y, width, height, topLeft, topRight, bottomRight, bottomLeft);
+        NanoVG.nvgFillColor(nvgContext, getColor(color));
+        NanoVG.nvgFill(nvgContext);
+        NanoVG.nvgClosePath(nvgContext);
+    }
+
 }

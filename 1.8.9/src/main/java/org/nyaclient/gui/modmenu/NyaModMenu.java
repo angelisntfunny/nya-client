@@ -6,6 +6,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.StringUtils;
+import org.nyaclient.gui.modmenu.screens.ModsInnerScreen;
 import org.nyaclient.mixin.GameRendererAccessor;
 import org.nyaclient.utils.FontRenderer;
 import org.nyaclient.utils.NanoVGManager;
@@ -16,6 +17,8 @@ import java.awt.*;
 public class NyaModMenu extends Screen {
     private final int windowWidth = 175;
     private final int windowHeight = 120;
+
+    private InnerScreen screen;
 
     private enum Icon {
         MODS,
@@ -43,6 +46,15 @@ public class NyaModMenu extends Screen {
         window = new Window(MinecraftClient.getInstance());
         Identifier blurShader = new Identifier("minecraft", "shaders/post/blur.json");
         ((GameRendererAccessor) mc.gameRenderer).setShader(blurShader);
+        if (screen == null) {
+            screen = new ModsInnerScreen(0, 0, 0, 0);
+        }
+
+        screen.x = (float) window.getWidth() / 2 - windowWidth + 45;
+        screen.width = windowWidth * 2.0f - 45;
+        screen.y = window.getHeight() / 2.0f - windowHeight + 45;
+        screen.height = windowHeight * 2.0f - 45;
+
         super.init();
     }
 
@@ -63,6 +75,11 @@ public class NyaModMenu extends Screen {
             }
 
             FontRenderer.renderText((float) window.getWidth() / 2 - windowWidth + 50, (float) window.getHeight() / 2 - windowHeight + 30, "Nya");
+
+            // i think this might be the WORST way anyone has ever abstracted code
+            if (screen != null) {
+                screen.draw(mouseX, mouseY);
+            }
         });
         super.render(mouseX, mouseY, tickDelta);
     }
