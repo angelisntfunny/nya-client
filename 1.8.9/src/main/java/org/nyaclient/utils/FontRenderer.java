@@ -37,6 +37,16 @@ public class FontRenderer {
 
         long vg = NanoVGManager.getNvgContext();
 
+        float[] xy = getStandardXYFromCenter(size, centerX, centerY, text);
+
+        NanoVG.nvgFillColor(vg, NanoVGManager.getColor(color));
+        NanoVG.nvgText(vg, xy[0], xy[1], text);
+    }
+
+    // i've never understood programmers complaining about how hard it is to name but holy shit i understand now
+    public static float[] getStandardXYFromCenter(float size, float centerX, float centerY, String text) {
+        long vg = NanoVGManager.getNvgContext();
+
         NanoVG.nvgFontFace(vg, fontName);
         NanoVG.nvgFontSize(vg, size);
 
@@ -47,8 +57,7 @@ public class FontRenderer {
         float x = centerX - (bounds[0] + bounds[2]) / 2.0f;
         float y = centerY - (bounds[1] + bounds[3]) / 2.0f;
 
-        NanoVG.nvgFillColor(vg, NanoVGManager.getColor(color));
-        NanoVG.nvgText(vg, x, y, text);
+        return new float[] {x, y};
     }
 
 

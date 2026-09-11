@@ -69,4 +69,12 @@ public class NanoVGManager {
         NanoVG.nvgClosePath(nvgContext);
     }
 
+    public static void drawRect(float x, float y, float width, float height, Color awtcolor) {
+        NanoVG.nvgBeginPath(nvgContext);
+        NanoVG.nvgRect(nvgContext, x, y, width, height);
+        NanoVG.nvgFillColor(nvgContext, getColor(awtcolor));
+        NanoVG.nvgFill(nvgContext);
+        NanoVG.nvgClosePath(nvgContext);
+    }
+
 }

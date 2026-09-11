@@ -6,6 +6,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.util.Identifier;
 import org.nyaclient.NyaClient;
+import org.nyaclient.gui.modmenu.NyaModMenu;
 import org.nyaclient.mixin.GameRendererAccessor;
 import org.nyaclient.module.HUDMod;
 import org.nyaclient.utils.FontRenderer;
@@ -46,6 +47,16 @@ public class HUDPositioner extends Screen {
         });
 
         super.render(mouseX, mouseY, tickDelta);
+    }
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int button) {
+        super.mouseClicked(mouseX, mouseY, button);
+
+        if (mouseX > window.getWidth() / 2 - 45 && mouseX < window.getWidth() / 2 + 45 &&
+            mouseY > window.getHeight() / 2 - 15 && mouseY < window.getHeight() / 2 + 15) {
+            mc.setScreen(new NyaModMenu());
+        }
     }
 
     @Override

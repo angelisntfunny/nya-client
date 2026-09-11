@@ -57,9 +57,9 @@ public class NyaTitleScreen extends Screen {
 
         for (int i = 0; i < 4; i++) {
             float buttonY = height / 2.0F + i * 30.0f;
-            float x = width / 2.0F - 50.0f;
+            float x = width / 2.0F - 65.0f;
 
-            if (mouseX >= x && mouseX <= x + 100 && mouseY >= buttonY && mouseY <= buttonY + 25) {
+            if (mouseX >= x && mouseX <= x + 130 && mouseY >= buttonY && mouseY <= buttonY + 25) {
                 if (i == 0) {
                     MinecraftClient.getInstance().setScreen(new SelectWorldScreen(this));
                 } else if (i == 1) {
@@ -218,12 +218,12 @@ public class NyaTitleScreen extends Screen {
             FontRenderer.renderCenteredText(24, this.width / 2.0F, this.height / 2.0F - 50, "Nya", new Color(255, 255, 255));
 
             for (int i = 0; i < 4; i++) {
-                float buttonY = height / 2.0F + i * 30.0f;
+                float buttonY = height / 2.0F + i * 27;
 
                 NanoVGManager.drawRoundedRect(
-                        width/2.0F - 50.0f,
+                        width/2.0F - 65,
                         buttonY,
-                        100.0f,
+                        130.0f,
                         25.0f,
                         5,
                         new Color(0, 0, 0, 170)
@@ -233,7 +233,7 @@ public class NyaTitleScreen extends Screen {
                 String label = i == 0 ? "Singleplayer" : (i == 1 ? "Multiplayer": (i == 2 ? "Settings" : "Quit"));
 
                 FontRenderer.renderCenteredText(
-                        12,
+                        10,
                         width/2.0F,
                         buttonY + 12.5f,
                         label,
