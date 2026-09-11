@@ -16,6 +16,7 @@ import java.awt.*;
 public class NyaModMenu extends Screen {
     private final int windowWidth = 175;
     private final int windowHeight = 120;
+
     private enum Icon {
         MODS,
         SETTINGS,
@@ -58,7 +59,7 @@ public class NyaModMenu extends Screen {
 
             for (int i = 0; i < 5; i++) {
                 NanoVGManager.drawRect((float) window.getWidth() / 2 - windowWidth, (float) window.getHeight() / 2 - windowHeight + 40 * (i + 1), 40, 5, new Color(26, 26, 26));
-                FontRenderer.renderCenteredText(6, window.getWidth() / 2 - windowWidth + 20, window.getHeight() / 2 - windowHeight + 40 * (i + 2) - 5, Icon.values()[i].toString(), new Color(255, 255, 255));
+                FontRenderer.renderCenteredText(6, (float) window.getWidth() / 2 - windowWidth + 20, (float) window.getHeight() / 2 - windowHeight + 40 * (i + 2) - 5, Icon.values()[i].toString(), new Color(255, 255, 255));
             }
 
             FontRenderer.renderText((float) window.getWidth() / 2 - windowWidth + 50, (float) window.getHeight() / 2 - windowHeight + 30, "Nya");
@@ -73,7 +74,7 @@ public class NyaModMenu extends Screen {
             for (int i = 0; i < 5; i++) {
                 Icon icon = Icon.values()[i];
                 if (mouseX >= window.getWidth() / 2 - windowWidth && mouseX <= window.getWidth() / 2 - windowWidth + 40 &&
-                    mouseY >= window.getHeight() / 2 - windowHeight + 40 * (i + 1) && mouseY <= window.getHeight() / 2 - windowHeight + 40 * (i + 2)) {
+                    mouseY >= window.getHeight() / 2 - windowHeight + 40 * (i + 1) + 5 && mouseY <= window.getHeight() / 2 - windowHeight + 40 * (i + 2)) {
                     System.out.println(icon.toString());
                 }
             }
