@@ -85,8 +85,16 @@ public class NyaModMenu extends Screen {
     }
 
     @Override
+    public void handleMouse() {
+        super.handleMouse();
+
+        if (this.screen != null) screen.handleMouse();
+    }
+
+    @Override
     protected void mouseClicked(int mouseX, int mouseY, int button) {
 
+        screen.onClick(mouseX, mouseY, button);
         if (button == 0) {
             for (int i = 0; i < 5; i++) {
                 Icon icon = Icon.values()[i];

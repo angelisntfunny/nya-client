@@ -10,6 +10,7 @@ public abstract class InnerScreen {
         this.height = height;
     }
 
+    public abstract void handleMouse();
     public abstract void draw(float mouseX, float mouseY);
     public abstract void onClick(float mouseX, float mouseY, int button);
 }

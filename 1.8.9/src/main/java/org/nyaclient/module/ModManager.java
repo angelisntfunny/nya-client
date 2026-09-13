@@ -38,4 +38,8 @@ public class ModManager {
     public List<HUDMod> getHUDMods() {
         return MODS.stream().filter(m -> m instanceof HUDMod && ((HUDMod) m).isEnabled()).map(HUDMod.class::cast).collect(Collectors.toList());
     }
+
+    public List<IMod> getMods() {
+        return MODS;
+    }
 }
