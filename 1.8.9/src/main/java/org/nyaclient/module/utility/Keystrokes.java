@@ -1,6 +1,5 @@
 package org.nyaclient.module.utility;
 
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.option.KeyBinding;
 import org.lwjgl.input.Keyboard;
 import org.nyaclient.module.HUDMod;
@@ -8,13 +7,12 @@ import org.nyaclient.module.ModCategory;
 import org.nyaclient.utils.Colors;
 import org.nyaclient.utils.FontRenderer;
 import org.nyaclient.utils.NanoVGManager;
-import org.nyaclient.utils.TextUtils;
 
 import java.awt.*;
 
 public class Keystrokes extends HUDMod {
     public Keystrokes() {
-        super("Keystrokes", "Visualizes your keystrokes.", ModCategory.UTILITY, Keyboard.KEY_0, 10, 10);
+        super("mods.keystrokes", "icons/mods/keystrokes.png", ModCategory.UTILITY, Keyboard.KEY_0, 10, 10);
     }
 
     private String getKeyName(KeyBinding keyBinding) {

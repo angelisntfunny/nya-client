@@ -14,7 +14,7 @@ public class VisualTweaks extends AbstractMod {
 
     public static VisualTweaks instance;
     public VisualTweaks() {
-        super("Visual Tweaks", "Visual tweaks to make your life better.", ModCategory.VISUALS, Keyboard.KEY_N);
+        super("mods.visualtweaks", "icons/mods/visualtweaks.png", ModCategory.VISUALS, Keyboard.KEY_N);
         instance = this;
     }
 }

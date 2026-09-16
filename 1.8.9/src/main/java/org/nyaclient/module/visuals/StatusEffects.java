@@ -11,7 +11,6 @@ import org.lwjgl.input.Keyboard;
 import org.nyaclient.gui.HUDPositioner;
 import org.nyaclient.module.HUDMod;
 import org.nyaclient.module.ModCategory;
-import org.nyaclient.utils.FontRenderer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class StatusEffects extends HUDMod {
     protected static final Identifier INVENTORY_TEXTURE = new Identifier("textures/gui/container/inventory.png");
 
     public StatusEffects() {
-        super("Status Effects", "hi", ModCategory.VISUALS, Keyboard.KEY_0, 150, 150);
+        super("mods.statuseffects", "icons/mods/statuseffects.png", ModCategory.VISUALS, Keyboard.KEY_0, 150, 150);
         this.drawableHelper = new DrawableHelper();
     }
 
@@ -30,7 +29,6 @@ public class StatusEffects extends HUDMod {
         GlStateManager.pushMatrix();
         int i = this.x;
         int j = this.y;
-        int k = 166;
         Collection<StatusEffectInstance> collection = MinecraftClient.getInstance().player.getStatusEffectInstances();
 
         if (collection.isEmpty() && mc.currentScreen instanceof HUDPositioner) {
@@ -56,13 +54,13 @@ public class StatusEffects extends HUDMod {
                     drawableHelper.drawTexture(i + 6, j + 7, m % 8 * 18, 198 + m / 8 * 18, 18, 18);
                 }
 
-                String string = I18n.translate(statusEffect.getTranslationKey(), new Object[0]);
+                String string = I18n.translate(statusEffect.getTranslationKey());
                 if (statusEffectInstance.getAmplifier() == 1) {
-                    string = string + " " + I18n.translate("enchantment.level.2", new Object[0]);
+                    string = string + " " + I18n.translate("enchantment.level.2");
                 } else if (statusEffectInstance.getAmplifier() == 2) {
-                    string = string + " " + I18n.translate("enchantment.level.3", new Object[0]);
+                    string = string + " " + I18n.translate("enchantment.level.3");
                 } else if (statusEffectInstance.getAmplifier() == 3) {
-                    string = string + " " + I18n.translate("enchantment.level.4", new Object[0]);
+                    string = string + " " + I18n.translate("enchantment.level.4");
                 }
 
                 MinecraftClient.getInstance().textRenderer.draw(string, i + 10 + 18, j + 6, 16777215);

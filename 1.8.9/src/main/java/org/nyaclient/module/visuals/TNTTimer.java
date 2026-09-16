@@ -10,7 +10,7 @@ import org.nyaclient.module.ModCategory;
 public class TNTTimer extends AbstractMod {
     public static TNTTimer instance;
     public TNTTimer() {
-        super("TNT Timer", "hi", ModCategory.VISUALS, Keyboard.KEY_B);
+        super("mods.tnttimer", "icons/mods/tnttimer.png", ModCategory.VISUALS, Keyboard.KEY_B);
         instance = this;
     }
 }

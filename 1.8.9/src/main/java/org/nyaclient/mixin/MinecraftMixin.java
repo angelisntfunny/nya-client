@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import org.nyaclient.NyaClient;
 import org.nyaclient.event.impl.EventKey;
 import org.nyaclient.gui.HUDPositioner;
+import org.nyaclient.module.IMod;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,6 +29,13 @@ public class MinecraftMixin {
             if (NyaClient.getInstance().getModsConfigKeybind().isPressed()) {
                 MinecraftClient.getInstance().setScreen(new HUDPositioner());
             }
+        }
+    }
+
+    @Inject(method = "stop", at = @At("HEAD"))
+    private void shutdown(CallbackInfo ci) {
+        for (IMod mod : NyaClient.getInstance().getModManager().getMods()) {
+            mod.cleanup();
         }
     }
 }

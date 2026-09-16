@@ -4,16 +4,14 @@ import lombok.Getter;
 import org.lwjgl.input.Mouse;
 import org.nyaclient.utils.Draw2D;
 
-import java.awt.*;
-
 public abstract class HUDMod extends AbstractMod {
     @Getter protected int x, y;
 
     protected boolean dragging;
     protected int lastX, lastY;
 
-    public HUDMod(String name, String description, ModCategory category, int key, int x, int y) {
-        super(name, description, category, key);
+    public HUDMod(String name, String iconPath, ModCategory category, int key, int x, int y) {
+        super(name, iconPath, category, key);
         this.x = x;
         this.y = y;
     }

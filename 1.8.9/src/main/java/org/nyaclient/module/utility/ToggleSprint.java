@@ -1,6 +1,5 @@
 package org.nyaclient.module.utility;
 
-import net.minecraft.client.gui.DrawableHelper;
 import org.lwjgl.input.Keyboard;
 import org.nyaclient.event.Subscribe;
 import org.nyaclient.event.impl.EventKey;
@@ -15,9 +14,9 @@ import org.nyaclient.utils.TextUtils;
 
 import java.awt.*;
 
+@SuppressWarnings("unused")
 public class ToggleSprint extends HUDMod {
     private boolean toggleSprint = false;
-
 
     @Override
     public void onDisable() {
@@ -38,7 +37,7 @@ public class ToggleSprint extends HUDMod {
     }
 
     public ToggleSprint() {
-        super("Toggle Sprint", "Makes you sprint", ModCategory.UTILITY, Keyboard.KEY_N, 100, 100);
+        super("mods.togglesprint", "icons/mods/togglesprint.png", ModCategory.UTILITY, Keyboard.KEY_N, 100, 100);
     }
 
     @Subscribe
@@ -53,7 +52,7 @@ public class ToggleSprint extends HUDMod {
     }
 
     @Subscribe
-    public void onUpdate(EventUpdate event) {
+    public void onUpdate(EventUpdate ignored) {
         if (toggleSprint) {
             ((KeyBindingInterface) mc.options.sprintKey).setKeyPressed(true);
         }

@@ -7,15 +7,16 @@ import org.nyaclient.module.AbstractMod;
 import org.nyaclient.module.ModCategory;
 
 // TODO: add lerp to the zoom to make it animated
+@SuppressWarnings("unused")
 public class ZoomMod extends AbstractMod {
     public static ZoomMod instance;
     public ZoomMod() {
-        super("Zoom", "zoom", ModCategory.UTILITY, Keyboard.KEY_C);
+        super("mods.zoom", "icons/mods/zoom.png", ModCategory.UTILITY, Keyboard.KEY_C);
         instance = this;
     }
 
     @Subscribe
-    private void onUpdate(EventUpdate event) {
+    private void onUpdate(EventUpdate ignored) {
         if (!Keyboard.isKeyDown(key)) {
             this.setEnabled(false);
             mc.options.smoothCameraEnabled = false;

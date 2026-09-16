@@ -41,5 +41,8 @@ public class NyaClient {
                 Keyboard.KEY_RSHIFT,
                 "category.nyaclient"
         ));
+//        for (IMod mod : modManager.getMods()) {
+//            mod.getIconHandle();
+//        }
     }
 }

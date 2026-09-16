@@ -1,4 +1,13 @@
 {
   "key.nyaclient.modsconfigkeybind": "Mods Config Menu",
-  "category.nyaclient": "Nya Client"
+  "category.nyaclient": "Nya Client",
+  "mods.fullbright": "Fullbright",
+  "mods.keystrokes": "Keystrokes",
+  "mods.togglesprint": "Toggle Sprint",
+  "mods.zoom": "Zoom",
+  "mods.statuseffects": "Status Effects",
+  "mods.tnttimer": "TNT Timer",
+  "mods.visualtweaks": "Visual Tweaks",
+  "term.disabled": "Disabled",
+  "term.enabled": "Enabled"
 }

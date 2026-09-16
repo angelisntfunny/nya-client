@@ -1,12 +1,9 @@
 package org.nyaclient.utils;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import org.apache.commons.io.IOUtils;
-import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVG;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.system.MemoryUtil;
 
 import java.awt.*;
@@ -65,16 +62,6 @@ public class FontRenderer {
     public static void renderText(float size, float x, float y, String text, Color color) {
         if (fontId == -1) return;
 
-        MinecraftClient client = MinecraftClient.getInstance();
-        Window window = new Window(MinecraftClient.getInstance());
-
-        int framebufferWidth = client.getFramebuffer().viewportWidth;
-        int width = window.getWidth();
-
-        float pixelRatio = (float) framebufferWidth / (float) width;
-
-//        size = pixelRatio * size;
-
         NanoVG.nvgFillColor(NanoVGManager.getNvgContext(), NanoVGManager.getColor(color));
         NanoVG.nvgFontFace(NanoVGManager.getNvgContext(), fontName);
         NanoVG.nvgFontSize(NanoVGManager.getNvgContext(), size);
@@ -87,15 +74,6 @@ public class FontRenderer {
 
     public static float getTextWidth(float size, String text) {
         if (fontId == -1) return 0;
-
-        MinecraftClient client = MinecraftClient.getInstance();
-        Window window = new Window(MinecraftClient.getInstance());
-
-        int framebufferWidth = client.getFramebuffer().viewportWidth;
-        int width = window.getWidth();
-
-        float pixelRatio = (float) framebufferWidth / (float) width;
-//        size *= pixelRatio;
 
         NanoVG.nvgFontFace(NanoVGManager.getNvgContext(), fontName);
         NanoVG.nvgFontSize(NanoVGManager.getNvgContext(), size);
@@ -127,16 +105,18 @@ public class FontRenderer {
         return bounds[3] - bounds[1]; // bottom - top
     }
 
+    @SuppressWarnings("unused")
     public static float getTextHeight(String text) {
         return getTextHeight(24.0F, text);
     }
 
+    @SuppressWarnings("unused")
     public static float getTextWidth(String text) {
         return getTextWidth(24.0F, text);
     }
 
 
-    private static ByteBuffer ioResourceToByteBuffer(String resource) throws IOException {
+    public static ByteBuffer ioResourceToByteBuffer(String resource) throws IOException {
         try (InputStream source = FontRenderer.class.getResourceAsStream(resource)) {
             if (source == null) {
                 throw new RuntimeException("source is null");

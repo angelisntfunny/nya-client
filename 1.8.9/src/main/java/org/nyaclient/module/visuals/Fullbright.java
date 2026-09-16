@@ -1,4 +1,4 @@
-package org.nyaclient.module.utility;
+package org.nyaclient.module.visuals;
 
 import org.lwjgl.input.Keyboard;
 import org.nyaclient.module.AbstractMod;
@@ -9,8 +9,9 @@ import org.nyaclient.module.ModCategory;
  */
 public class Fullbright extends AbstractMod {
     public static Fullbright instance;
+
     public Fullbright() {
-        super("Fullbright", "Fullbright", ModCategory.UTILITY, Keyboard.KEY_M);
+        super("mods.fullbright", "icons/mods/fullbright.png", ModCategory.VISUALS, Keyboard.KEY_M);
         instance = this;
     }
 }

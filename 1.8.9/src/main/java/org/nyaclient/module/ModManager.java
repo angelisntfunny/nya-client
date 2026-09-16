@@ -1,7 +1,7 @@
 package org.nyaclient.module;
 
 import net.minecraft.client.MinecraftClient;
-import org.nyaclient.module.utility.Fullbright;
+import org.nyaclient.module.visuals.Fullbright;
 import org.nyaclient.module.utility.Keystrokes;
 import org.nyaclient.module.utility.ToggleSprint;
 import org.nyaclient.module.utility.ZoomMod;
@@ -31,12 +31,13 @@ public class ModManager {
         MODS.stream().filter(m -> m.getKey() == key).forEach(IMod::toggle);
     }
 
+    @SuppressWarnings("unused")
     public <T> T getMod(Class<T> clazz) {
         return MODS.stream().filter(m -> m.getClass().equals(clazz)).map(clazz::cast).findFirst().orElse(null);
     }
 
     public List<HUDMod> getHUDMods() {
-        return MODS.stream().filter(m -> m instanceof HUDMod && ((HUDMod) m).isEnabled()).map(HUDMod.class::cast).collect(Collectors.toList());
+        return MODS.stream().filter(m -> m instanceof HUDMod && m.isEnabled()).map(HUDMod.class::cast).collect(Collectors.toList());
     }
 
     public List<IMod> getMods() {
