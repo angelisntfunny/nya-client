@@ -5,7 +5,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVG;
 import org.nyaclient.NyaClient;
-import org.nyaclient.gui.modmenu.InnerScreen;
+import org.nyaclient.gui.modmenu.Subview;
 import org.nyaclient.module.IMod;
 import org.nyaclient.utils.FontRenderer;
 import org.nyaclient.utils.NanoVGManager;
@@ -13,12 +13,15 @@ import org.nyaclient.utils.NanoVGManager;
 import java.awt.*;
 
 
-public class ModsInnerScreen extends InnerScreen {
-    public ModsInnerScreen(float x, float y, float width, float height) {
+public class ModsSubview extends Subview {
+    public ModsSubview(float x, float y, float width, float height) {
         super(x, y, width, height);
     }
-    private int scrollOffset = 0;
+    private float scrollOffset = 0;
     private final float contentHeight = Math.round((float) NyaClient.getInstance().getModManager().getMods().size() / 3 + 0.5) * 80 + 5;
+
+    private double targetScroll = 0.0;
+    private final double lerpFactor = 1.0;
 
     private void drawMods() {
         int i = 1;
@@ -81,21 +84,25 @@ public class ModsInnerScreen extends InnerScreen {
             return;
         }
 
-        int scrollSpeed = 15;
+        double scrollSpeed = 15;
         if (dWheel > 0) {
-            scrollOffset -= scrollSpeed;
+            targetScroll -= scrollSpeed;
         } else {
-            scrollOffset += scrollSpeed;
+            targetScroll += scrollSpeed;
         }
 
         int maxScroll = Math.max(0, (int) contentHeight - (int) height);
-        scrollOffset = Math.max(0, Math.min(scrollOffset, maxScroll));
+        targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
     }
 
 
     @Override
-    public void draw(float mouseX, float mouseY) {
+    public void draw(float mouseX, float mouseY, float deltaTime) {
         long vg = NanoVGManager.getNvgContext();
+
+        double factor = 1.0 - Math.pow(1.0 - lerpFactor, deltaTime * 60);
+
+        scrollOffset = (float) (scrollOffset + (targetScroll - scrollOffset) * factor);
 
         NanoVG.nvgSave(vg);
         NanoVG.nvgScissor(vg, x, y, width, height);
@@ -115,7 +122,7 @@ public class ModsInnerScreen extends InnerScreen {
         float renderY = y + 5;
         float modWidth = (width - 30) / 3;
         for (IMod mod : NyaClient.getInstance().getModManager().getMods()) {
-            if (mouseX >= renderX && mouseX <= renderX + modWidth && mouseY >= renderY && mouseY <= renderY + 75) {
+            if (mouseX >= renderX && mouseX <= renderX + modWidth && mouseY >= renderY - scrollOffset && mouseY <= renderY - scrollOffset + 75) {
                 mod.toggle();
                 break;
             }

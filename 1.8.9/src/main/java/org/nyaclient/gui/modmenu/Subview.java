@@ -1,9 +1,9 @@
 package org.nyaclient.gui.modmenu;
 
-public abstract class InnerScreen {
+public abstract class Subview {
     public float x, y, width, height;
 
-    protected InnerScreen(float x, float y, float width, float height) {
+    protected Subview(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -11,6 +11,6 @@ public abstract class InnerScreen {
     }
 
     public abstract void handleMouse(float mouseX, float mouseY);
-    public abstract void draw(float mouseX, float mouseY);
+    public abstract void draw(float mouseX, float mouseY, float deltaTime);
     public abstract void onClick(float mouseX, float mouseY, int button);
 }

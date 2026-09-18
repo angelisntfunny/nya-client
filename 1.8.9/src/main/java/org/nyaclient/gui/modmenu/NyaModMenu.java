@@ -9,7 +9,8 @@ import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVG;
-import org.nyaclient.gui.modmenu.screens.ModsInnerScreen;
+import org.nyaclient.gui.modmenu.screens.ModsSubview;
+import org.nyaclient.gui.modmenu.screens.SettingsSubview;
 import org.nyaclient.mixin.GameRendererAccessor;
 import org.nyaclient.utils.FontRenderer;
 import org.nyaclient.utils.NanoVGManager;
@@ -23,12 +24,12 @@ public class NyaModMenu extends Screen {
     private final int windowWidth = 175;
     private final int windowHeight = 120;
 
-    private InnerScreen screen;
+    private Subview screen;
 
     private enum Icon {
         MODS("icons/modmenu/component.png"),
         SETTINGS("icons/modmenu/cog.png"),
-        ACCOUNTS("icons/modmenu/accounts.png"),
+        //ACCOUNTS("icons/modmenu/accounts.png"), // removed bc spotify made playback api paid. fuck spotify, navidrome better.
         COLORS("icons/modmenu/brush.png"),
         EXIT("icons/modmenu/door.png");
 
@@ -66,7 +67,7 @@ public class NyaModMenu extends Screen {
         Identifier blurShader = new Identifier("minecraft", "shaders/post/blur.json");
         ((GameRendererAccessor) mc.gameRenderer).setShader(blurShader);
         if (screen == null) {
-            screen = new ModsInnerScreen(0, 0, 0, 0);
+            screen = new ModsSubview(0, 0, 0, 0);
         }
 
         screen.x = (float) window.getWidth() / 2 - windowWidth + 45;
@@ -109,7 +110,7 @@ public class NyaModMenu extends Screen {
             NanoVGManager.drawRect((float) window.getWidth() / 2 - windowWidth + 40, (float) window.getHeight() / 2 - windowHeight, 5, windowHeight * 2, new Color(26, 26, 26));
             NanoVGManager.drawRect((float) window.getWidth() / 2 - windowWidth, (float) window.getHeight() / 2 - windowHeight + 40, windowWidth * 2.0f, 5, new Color(26, 26, 26));
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < Icon.values().length; i++) {
                 Icon icon = Icon.values()[i];
                 NanoVGManager.drawRect((float) window.getWidth() / 2 - windowWidth, (float) window.getHeight() / 2 - windowHeight + 40 * (i + 1), 40, 5, new Color(26, 26, 26));
                 FontRenderer.renderCenteredText(6, (float) window.getWidth() / 2 - windowWidth + 20, (float) window.getHeight() / 2 - windowHeight + 40 * (i + 2) - 5, icon.toString(), new Color(255, 255, 255));
@@ -121,7 +122,7 @@ public class NyaModMenu extends Screen {
 
             // i think this might be the WORST way anyone has ever abstracted code
             if (screen != null) {
-                screen.draw(mouseX, mouseY);
+                screen.draw(mouseX, mouseY, tickDelta);
             }
         });
         super.render(mouseX, mouseY, tickDelta);
@@ -138,11 +139,25 @@ public class NyaModMenu extends Screen {
 
         screen.onClick(mouseX, mouseY, button);
         if (button == 0) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < Icon.values().length; i++) {
                 Icon icon = Icon.values()[i];
+
+                float x = (float) window.getWidth() / 2 - windowWidth + 45;
+                float width = windowWidth * 2.0f - 45;
+                float y = window.getHeight() / 2.0f - windowHeight + 45;
+                float height = windowHeight * 2.0f - 45;
+
+
+
                 if (mouseX >= window.getWidth() / 2 - windowWidth && mouseX <= window.getWidth() / 2 - windowWidth + 40 &&
                     mouseY >= window.getHeight() / 2 - windowHeight + 40 * (i + 1) + 5 && mouseY <= window.getHeight() / 2 - windowHeight + 40 * (i + 2)) {
-                    System.out.println(icon.toString());
+                    if (icon == Icon.MODS) {
+                        if (!(screen instanceof ModsSubview)) screen = new ModsSubview(x, y, width, height);
+                    } else if (icon == Icon.SETTINGS) {
+                        if (!(screen instanceof SettingsSubview)) screen = new SettingsSubview(x, y, width, height);
+                    }
+
+                    break;
                 }
             }
         }
