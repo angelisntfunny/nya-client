@@ -1,17 +1,22 @@
 package org.nyaclient.gui.modmenu;
 
+import lombok.Getter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.StringUtils;
+import org.lwjgl.nanovg.NVGPaint;
+import org.lwjgl.nanovg.NanoVG;
 import org.nyaclient.gui.modmenu.screens.ModsInnerScreen;
 import org.nyaclient.mixin.GameRendererAccessor;
 import org.nyaclient.utils.FontRenderer;
 import org.nyaclient.utils.NanoVGManager;
 
 import java.awt.*;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 
 // TODO: add icons
 public class NyaModMenu extends Screen {
@@ -21,11 +26,25 @@ public class NyaModMenu extends Screen {
     private InnerScreen screen;
 
     private enum Icon {
-        MODS,
-        SETTINGS,
-        ACCOUNTS,
-        COLORS,
-        EXIT;
+        MODS("icons/modmenu/component.png"),
+        SETTINGS("icons/modmenu/cog.png"),
+        ACCOUNTS("icons/modmenu/accounts.png"),
+        COLORS("icons/modmenu/brush.png"),
+        EXIT("icons/modmenu/door.png");
+
+        @SuppressWarnings("FieldCanBeLocal")
+        private final ByteBuffer imageBuffer;
+        @Getter
+        private int handle = 0;
+
+        Icon(String path) {
+            try {
+                imageBuffer = FontRenderer.ioResourceToByteBuffer("/assets/nyaclient/" + path);
+                handle = NanoVG.nvgCreateImageMem(NanoVGManager.getNvgContext(), 0, imageBuffer);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         @Override
         public String toString() {
@@ -58,6 +77,27 @@ public class NyaModMenu extends Screen {
         super.init();
     }
 
+    private void drawIcon(Icon icon, int i) {
+        int handle = icon.handle;
+
+        if (handle != 0) {
+            try (org.lwjgl.system.MemoryStack stack = org.lwjgl.system.MemoryStack.stackPush()) {
+                NVGPaint img = NVGPaint.malloc(stack);
+
+                float imgWidth = 20;
+                float imgHeight = 20;
+
+                NanoVG.nvgImagePattern(NanoVGManager.getNvgContext(), (float) window.getWidth() / 2 - windowWidth + 10, (float) window.getHeight() / 2 - windowHeight + 40 * (i + 2) - 32, imgWidth, imgHeight, 0F, handle, 1F, img);
+                NanoVG.nvgBeginPath(NanoVGManager.getNvgContext());
+                NanoVG.nvgRect(NanoVGManager.getNvgContext(), (float) window.getWidth() / 2 - windowWidth + 10, (float) window.getHeight() / 2 - windowHeight + 40 * (i + 2) - 32, imgWidth, imgHeight);
+                NanoVG.nvgFillPaint(NanoVGManager.getNvgContext(), img);
+                NanoVG.nvgFill(NanoVGManager.getNvgContext());
+            }
+        } else {
+            System.out.println("uh oh, stinky");
+        }
+    }
+
     @Override
     public void render(int mouseX, int mouseY, float tickDelta) {
         DrawableHelper.fill(0, 0, window.getWidth(), window.getHeight(), new Color(0, 0, 0, 110).getRGB());
@@ -70,8 +110,11 @@ public class NyaModMenu extends Screen {
             NanoVGManager.drawRect((float) window.getWidth() / 2 - windowWidth, (float) window.getHeight() / 2 - windowHeight + 40, windowWidth * 2.0f, 5, new Color(26, 26, 26));
 
             for (int i = 0; i < 5; i++) {
+                Icon icon = Icon.values()[i];
                 NanoVGManager.drawRect((float) window.getWidth() / 2 - windowWidth, (float) window.getHeight() / 2 - windowHeight + 40 * (i + 1), 40, 5, new Color(26, 26, 26));
-                FontRenderer.renderCenteredText(6, (float) window.getWidth() / 2 - windowWidth + 20, (float) window.getHeight() / 2 - windowHeight + 40 * (i + 2) - 5, Icon.values()[i].toString(), new Color(255, 255, 255));
+                FontRenderer.renderCenteredText(6, (float) window.getWidth() / 2 - windowWidth + 20, (float) window.getHeight() / 2 - windowHeight + 40 * (i + 2) - 5, icon.toString(), new Color(255, 255, 255));
+
+                drawIcon(icon, i);
             }
 
             FontRenderer.renderText((float) window.getWidth() / 2 - windowWidth + 50, (float) window.getHeight() / 2 - windowHeight + 30, "Nya");
