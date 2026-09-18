@@ -98,6 +98,8 @@ public class NyaModMenu extends Screen {
 
     @Override
     public void render(int mouseX, int mouseY, float tickDelta) {
+        if (this.screen != null) screen.handleMouse(mouseX, mouseY);
+
         DrawableHelper.fill(0, 0, window.getWidth(), window.getHeight(), new Color(0, 0, 0, 110).getRGB());
 
         NanoVGManager.render(() -> {
@@ -129,7 +131,6 @@ public class NyaModMenu extends Screen {
     public void handleMouse() {
         super.handleMouse();
 
-        if (this.screen != null) screen.handleMouse();
     }
 
     @Override

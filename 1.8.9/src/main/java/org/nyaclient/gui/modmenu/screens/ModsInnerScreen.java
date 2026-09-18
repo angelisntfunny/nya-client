@@ -72,7 +72,9 @@ public class ModsInnerScreen extends InnerScreen {
     }
 
     @Override
-    public void handleMouse() {
+    public void handleMouse(float mouseX, float mouseY) {
+
+        if (!(mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height)) return;
         int dWheel = Mouse.getDWheel();
 
         if (dWheel == 0) {
