@@ -93,8 +93,6 @@ public class NyaModMenu extends Screen {
                 NanoVG.nvgFillPaint(NanoVGManager.getNvgContext(), img);
                 NanoVG.nvgFill(NanoVGManager.getNvgContext());
             }
-        } else {
-            System.out.println("uh oh, stinky");
         }
     }
 
