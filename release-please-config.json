@@ -3,7 +3,8 @@
   "packages": {
     "1.8.9": {
       "release-type": "java",
-      "package-name": "my-java-app"
+      "package-name": "my-java-app",
+      "skip-snapshot": true
     }
   }
 }
