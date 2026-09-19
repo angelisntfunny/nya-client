@@ -17,29 +17,29 @@ jobs:
         id: release
 
       - uses: actions/checkout@v4
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs['1.8.9--release_created'] }}
         with:
-          ref: ${{ steps.release.outputs.tag_name }}
+          ref: ${{ steps.release.outputs['1.8.9--tag_name'] }}
 
       - name: Set up JDK
+        if: ${{ steps.release.outputs['1.8.9--release_created'] }}
         uses: actions/setup-java@v4
-        if: ${{ steps.release.outputs.releases_created }}
         with:
           java-version: '21'
           distribution: 'microsoft'
 
       - name: Grant execute permission for gradlew
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs['1.8.9--release_created'] }}
         run: chmod +x ./1.8.9/gradlew
 
       - name: Build with Gradle
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs['1.8.9--release_created'] }}
         run: ./gradlew build -x test
         working-directory: ./1.8.9
 
       - name: Upload JAR to GitHub Release
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs['1.8.9--release_created'] }}
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.release.outputs.tag_name }}
+          tag_name: ${{ steps.release.outputs['1.8.9--tag_name'] }}
           files: 1.8.9/build/libs/*-shadow.jar
