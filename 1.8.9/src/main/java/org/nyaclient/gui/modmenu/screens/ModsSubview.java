@@ -21,7 +21,6 @@ public class ModsSubview extends Subview {
     private final float contentHeight = Math.round((float) NyaClient.getInstance().getModManager().getMods().size() / 3 + 0.5) * 80 + 5;
 
     private double targetScroll = 0.0;
-    private final double lerpFactor = 1.0;
 
     private void drawMods() {
         int i = 1;
@@ -100,6 +99,7 @@ public class ModsSubview extends Subview {
     public void draw(float mouseX, float mouseY, float deltaTime) {
         long vg = NanoVGManager.getNvgContext();
 
+        double lerpFactor = 1.0;
         double factor = 1.0 - Math.pow(1.0 - lerpFactor, deltaTime * 60);
 
         scrollOffset = (float) (scrollOffset + (targetScroll - scrollOffset) * factor);
