@@ -155,6 +155,8 @@ public class NyaModMenu extends Screen {
                         if (!(screen instanceof ModsSubview)) screen = new ModsSubview(x, y, width, height);
                     } else if (icon == Icon.SETTINGS) {
                         if (!(screen instanceof SettingsSubview)) screen = new SettingsSubview(x, y, width, height);
+                    } else if (icon == Icon.EXIT) {
+                        client.setScreen(null);
                     }
 
                     break;

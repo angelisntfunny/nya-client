@@ -24,7 +24,8 @@ public class ClientPlayerEntityMixin {
                 MinecraftClient.getInstance().options.forwardKey,
                 MinecraftClient.getInstance().options.backKey,
                 MinecraftClient.getInstance().options.leftKey,
-                MinecraftClient.getInstance().options.rightKey
+                MinecraftClient.getInstance().options.rightKey,
+                MinecraftClient.getInstance().options.sprintKey
         };
 
         for (KeyBinding movementKey : movementKeys) {
