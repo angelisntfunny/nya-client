@@ -2,6 +2,8 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import net.fabricmc.loom.task.RunGameTask
 import org.gradle.internal.os.OperatingSystem
 
+version = '1.0.0'
+
 plugins {
 	id "net.fabricmc.fabric-loom-remap" version "${loom_version}"
 	id "legacy-looming" version "${loom_version}"
