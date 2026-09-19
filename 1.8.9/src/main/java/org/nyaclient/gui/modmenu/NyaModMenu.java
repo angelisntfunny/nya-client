@@ -30,7 +30,7 @@ public class NyaModMenu extends Screen {
         MODS("icons/modmenu/component.png"),
         SETTINGS("icons/modmenu/cog.png"),
         //ACCOUNTS("icons/modmenu/accounts.png"), // removed bc spotify made playback api paid. fuck spotify, navidrome better.
-        COLORS("icons/modmenu/brush.png"),
+        //COLORS("icons/modmenu/brush.png"),
         EXIT("icons/modmenu/door.png");
 
         @SuppressWarnings("FieldCanBeLocal")
