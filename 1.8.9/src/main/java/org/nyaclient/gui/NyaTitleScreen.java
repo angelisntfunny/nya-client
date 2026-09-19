@@ -230,7 +230,10 @@ public class NyaTitleScreen extends Screen {
                 );
 
                 // java 8 doesn't have switches so I need to do this fuckery
-                String label = i == 0 ? "Singleplayer" : (i == 1 ? "Multiplayer": (i == 2 ? "Settings" : "Quit"));
+                String label = i == 0 ?
+                        "Singleplayer" :
+                        (i == 1 ? "Multiplayer":
+                        (i == 2 ? "Settings" : "Quit"));
 
                 FontRenderer.renderCenteredText(
                         10,
