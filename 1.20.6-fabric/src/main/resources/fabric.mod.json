@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "nya-client",
+  "version": "1.0.0",
+  "name": "Nya Client",
+  "description": "A free and open source alternative to clients like Lunar/Badlion.",
+  "authors": [
+    "Angel"
+  ],
+  "contact": {
+    "homepage": "https://github.com/angelisntfunny/nya-client",
+    "sources": "https://github.com/angelisntfunny/nya-client"
+  },
+  "license": "GPL-3.0",
+  "icon": "${mod_id}.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.nyaclient.Nya"
+    ]
+  }
+}
