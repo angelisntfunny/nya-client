@@ -8,4 +8,23 @@ repositories {
 
 dependencies {
     api 'org.slf4j:slf4j-api:2.0.16'
+
+    api 'com.google.code.gson:gson:2.14.0'
+    api 'com.google.code.gson:gson-extras:2.13.2-rc1'
+
+    compileOnly "org.lwjgl:lwjgl-nanovg:3.3.3"
+
+    api 'commons-io:commons-io:2.22.0'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = Integer.parseInt(project.findProperty('java_version') as String ?: '21')
+}
+
+java {
+    withSourcesJar()
+
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(Integer.parseInt(project.findProperty('java_version') as String ?: '21'))
+    }
 }

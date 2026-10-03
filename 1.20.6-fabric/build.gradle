@@ -1,39 +1,116 @@
+import org.gradle.internal.os.OperatingSystem
+
 plugins {
-    id 'fabric-loom' version '1.6-SNAPSHOT'
+    id 'net.fabricmc.fabric-loom-remap' version "${fabric_loom_version}"
+    id 'maven-publish'
+}
+
+repositories {
+
+}
+
+project.ext.lwjglVersion = project.findProperty('lwjgl_version')
+
+def currentOs = OperatingSystem.current()
+def osArch = System.getProperty("os.arch")
+
+if (currentOs.isLinux()) {
+    project.ext.lwjglNatives = "natives-linux"
+    if (osArch.startsWith("arm") || osArch.startsWith("aarch64")) {
+        project.ext.lwjglNatives += osArch.contains("64") || osArch.startsWith("armv8") ? "-arm64" : "-arm32"
+    } else if (osArch.startsWith("ppc")) {
+        project.ext.lwjglNatives += "-ppc64le"
+    } else if (osArch.startsWith("riscv")) {
+        project.ext.lwjglNatives += "-riscv64"
+    }
+} else if (currentOs.isMacOsX()) {
+    project.ext.lwjglNatives = "natives-macos"
+} else if (currentOs.isWindows()) {
+    project.ext.lwjglNatives = osArch.contains("64")
+            ? "natives-windows${osArch.startsWith("aarch64") ? "-arm64" : ""}"
+            : "natives-windows-x86"
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:1.20.6"
+    minecraft "com.mojang:minecraft:${project.fabric_minecraft_version}"
     mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
 
-    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+    modRuntimeOnly "org.lwjgl:lwjgl-nanovg:3.3.3"
+    modRuntimeOnly "org.lwjgl:lwjgl-nanovg::$lwjglNatives"
+
+    include "org.lwjgl:lwjgl-nanovg:3.3.3"
+    include "org.lwjgl:lwjgl-stb:3.3.3"
+
+    include "org.lwjgl:lwjgl-nanovg:3.3.3:natives-linux"
+    include "org.lwjgl:lwjgl-nanovg:3.3.3:natives-windows"
+    include "org.lwjgl:lwjgl-nanovg:3.3.3:natives-macos"
+
+    include "org.lwjgl:lwjgl-stb:3.3.3:natives-linux"
+    include "org.lwjgl:lwjgl-stb:3.3.3:natives-windows"
+    include "org.lwjgl:lwjgl-stb:3.3.3:natives-macos"
+
+    implementation platform("org.lwjgl:lwjgl-bom:3.3.3")
+
+    implementation "org.lwjgl:lwjgl"
+    implementation "org.lwjgl:lwjgl-nanovg"
+    implementation "org.lwjgl:lwjgl-stb"
+
+    runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-nanovg::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
+
+    implementation 'com.google.code.gson:gson-extras:2.13.2-rc1'
+    include 'com.google.code.gson:gson-extras:2.13.2-rc1'
+
+    implementation 'com.google.code.gson:gson:2.14.0'
+
+
 
     implementation project(":common")
     include project(":common")
 }
 
+processResources {
+    def version = project.version
+    inputs.property "version", version
 
-loom {
-    def aw = project(":common").file("src/main/resources/${mod_id}.accesswidener")
-    if (aw.exists()) {
-        accessWidenerPath.set(aw)
+    filesMatching("fabric.mod.json") {
+        expand "version": version
     }
-    mixin {
-        defaultRefmapName.set("${mod_id}.refmap.json")
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = Integer.parseInt(project.findProperty('java_version') as String ?: '21')
+}
+
+java {
+    withSourcesJar()
+
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(Integer.parseInt(project.findProperty('java_version') as String ?: '21'))
     }
-    runs {
-        client {
-            client()
-            setConfigName("Fabric Client")
-            ideConfigGenerated(true)
-            runDir("runs/client")
+}
+
+jar {
+    def projectName = project.name
+    inputs.property "projectName", projectName
+
+    from("LICENSE") {
+        rename { "${it}_$projectName"}
+    }
+}
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            from components.java
         }
-        server {
-            server()
-            setConfigName("Fabric Server")
-            ideConfigGenerated(true)
-            runDir("runs/server")
-        }
+    }
+
+    repositories {
+
     }
 }

@@ -19,6 +19,6 @@ plugins {
 }
 
 rootProject.name = 'Nya Client'
-//include('1.8.9')
+
 include(':common')
 include(':1.20.6-fabric')

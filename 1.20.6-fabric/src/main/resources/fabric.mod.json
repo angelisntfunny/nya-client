@@ -12,8 +12,9 @@
     "sources": "https://github.com/angelisntfunny/nya-client"
   },
   "license": "GPL-3.0",
-  "icon": "${mod_id}.png",
+  "icon": "icon.png",
   "environment": "client",
+  "mixins": ["nyaclient.fabric.mixins.json"],
   "entrypoints": {
     "client": [
       "net.nyaclient.Nya"
