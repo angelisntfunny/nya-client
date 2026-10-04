@@ -74,7 +74,7 @@ dependencies {
 }
 
 processResources {
-    def version = property("mod_version")
+    def version = project.property("mod_version")
     inputs.property "version", version
 
     filesMatching("fabric.mod.json") {
