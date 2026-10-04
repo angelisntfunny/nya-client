@@ -1,0 +1,79 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Release Please
+        id: release
+        uses: google-apis/release-please-action@v4
+        with:
+          release-type: simple
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Determine Version
+        id: versioning
+        run: |
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          COMMIT_MSG=$(git log -1 --pretty=%s)
+
+          if [ "${{ steps.release.outputs.release_created }}" = "true" ]; then
+            VERSION_STRING="${{ steps.release.outputs.tag_name }}"
+            IS_PRERELEASE="false"
+          else
+            BASE_VERSION=$(grep "mod_version" gradle.properties | cut -d'=' -f2 | xargs)
+            VERSION_STRING="${BASE_VERSION}-pre.${COMMIT_HASH}"
+            IS_PRERELEASE="true"
+          fi
+
+          echo "version=${VERSION_STRING}" >> $GITHUB_OUTPUT
+          echo "is_prerelease=${IS_PRERELEASE}" >> $GITHUB_OUTPUT
+          echo "commit_msg=${COMMIT_MSG}" >> $GITHUB_OUTPUT
+          echo "commit_hash=${COMMIT_HASH}" >> $GITHUB_OUTPUT
+
+      - name: Build Mod Modules with Gradle
+        run: ./gradlew build -Pmod_version=${{ steps.versioning.outputs.version }}
+
+      - name: Upload to Commit Pre-Release
+        if: steps.release.outputs.release_created != 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: pre-${{ steps.versioning.outputs.commit_hash }}
+          name: "[Pre-Release] ${{ steps.versioning.outputs.commit_hash }}"
+          body: |
+            Automated pre-release build for commit:
+            **${{ steps.versioning.outputs.commit_msg }}**
+          prerelease: true
+          files: |
+            1.20.6-fabric/build/libs/*.jar
+
+      - name: Upload Mod Jars to Release Please Release
+        if: steps.release.outputs.release_created == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.release.outputs.tag_name }}
+          append_body: true
+          files: |
+            1.20.6-fabric/build/libs/*.jar
