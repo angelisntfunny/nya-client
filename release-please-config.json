@@ -1,0 +1,21 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "separate-pull-requests": false,
+  "plugins": [
+    {
+      "type": "linked-versions",
+      "groupName": "minecraft-mod",
+      "components": ["common", "1.20.6-fabric"]
+    }
+  ],
+  "packages": {
+    "common": {
+      "release-type": "simple",
+      "changelog-path": "CHANGELOG-common.md"
+    },
+    "1.20.6-fabric": {
+      "release-type": "simple",
+      "changelog-path": "CHANGELOG-fabric.md"
+    }
+  }
+}
