@@ -20,7 +20,7 @@ jobs:
 
       - name: Run Release Please
         id: release
-        uses: google-apis/release-please-action@v4
+        uses: googleapis/release-please-action@v4
         with:
           release-type: simple
 
