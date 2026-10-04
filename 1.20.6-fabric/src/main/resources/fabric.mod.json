@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "nya-client",
-  "version": "1.0.0",
+  "version": "${version}",
   "name": "Nya Client",
   "description": "A free and open source alternative to clients like Lunar/Badlion.",
   "authors": [
