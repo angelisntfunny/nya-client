@@ -21,6 +21,7 @@ import org.lwjgl.nanovg.NanoVG;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractMod implements IMod {
@@ -35,7 +36,7 @@ public class AbstractMod implements IMod {
     @Expose
     protected Key key = Key.KEY_NONE;
     @Expose
-    protected List<Value<?>> values;
+    protected List<Value<?>> values = new ArrayList<>();
 
     protected final ModCategory category;
 
@@ -114,6 +115,6 @@ public class AbstractMod implements IMod {
 
     @Override
     public List<Value<?>> getOptions() {
-        return List.of();
+        return values;
     }
 }

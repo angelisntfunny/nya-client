@@ -74,7 +74,7 @@ dependencies {
 }
 
 processResources {
-    def version = project.property("mod_version")
+    def version = project.hasProperty('mod_version') ? project.property('mod_version') : '1.0.0-SNAPSHOT' // for development environments.
     inputs.property "version", version
 
     filesMatching("fabric.mod.json") {

@@ -10,7 +10,10 @@
 
 package net.nyaclient.platform.services;
 
+import net.nyaclient.keyboard.Key;
+
 public interface ILWJGLBridge {
     boolean isMousePressed(int button);
+    boolean isKeyDown(Key key);
     double getdWheel();
 }

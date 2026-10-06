@@ -59,11 +59,27 @@ public class MinecraftBridge implements IMinecraftBridge {
             public boolean mouseClicked(double d, double e, int i) {
                 return renderer.mouseClicked(d, e, i, width, height);
             }
+
+            @Override
+            public void removed() {
+                super.removed();
+                renderer.close();
+            }
         });
     }
 
     @Override
     public String translate(String key) {
         return I18n.get(key);
+    }
+
+    @Override
+    public void setCinematicCamera(boolean state) {
+        Minecraft.getInstance().options.smoothCamera = state;
+    }
+
+    @Override
+    public int getFov() {
+        return Minecraft.getInstance().options.fov().get();
     }
 }

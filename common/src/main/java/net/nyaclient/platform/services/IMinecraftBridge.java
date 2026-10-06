@@ -18,4 +18,8 @@ public interface IMinecraftBridge {
     float getHeight();
     void setScreen(ScreenRenderer renderer);
     String translate(String key);
+
+    void setCinematicCamera(boolean state);
+
+    int getFov();
 }

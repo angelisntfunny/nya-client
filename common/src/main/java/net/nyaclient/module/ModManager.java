@@ -11,6 +11,7 @@
 package net.nyaclient.module;
 
 import net.nyaclient.keyboard.Key;
+import net.nyaclient.module.utility.ZoomMod;
 import net.nyaclient.module.visual.CPSMod;
 import net.nyaclient.platform.Services;
 import net.nyaclient.screen.impl.HUDPositionerRenderer;
@@ -23,6 +24,7 @@ public class ModManager {
     private final List<IMod> MODS = new ArrayList<>();
 
     public ModManager() {
+        MODS.add(new ZoomMod());
         MODS.add(new CPSMod());
     }
 

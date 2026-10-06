@@ -11,7 +11,9 @@
 package net.nyaclient.services;
 
 import net.minecraft.client.Minecraft;
+import net.nyaclient.keyboard.Key;
 import net.nyaclient.platform.services.ILWJGLBridge;
+import net.nyaclient.util.KeyTranslator;
 import net.nyaclient.util.MouseHelper;
 import org.lwjgl.glfw.GLFW;
 
@@ -19,6 +21,12 @@ public class LWJGLBridge implements ILWJGLBridge {
     @Override
     public boolean isMousePressed(int button) {
         return GLFW.glfwGetMouseButton(Minecraft.getInstance().getWindow().getWindow(), button) == GLFW.GLFW_PRESS;
+    }
+
+    @Override
+    public boolean isKeyDown(Key key) {
+        if (key == Key.KEY_NONE) return false;
+        return GLFW.glfwGetKey(Minecraft.getInstance().getWindow().getWindow(), KeyTranslator.getIntegerFromKey(key)) == GLFW.GLFW_PRESS;
     }
 
     @Override

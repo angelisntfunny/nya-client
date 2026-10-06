@@ -27,8 +27,12 @@ public class ModMenu extends ScreenRenderer {
     private final int windowWidth = 175;
     private final int windowHeight = 120;
 
-    private Subview screen;
+    private static Subview screen;
 
+    // ugly code
+    static void setSubview(Subview subview) {
+        screen = subview;
+    }
     private enum Icon {
         MODS("icons/component.png"),
         EXIT("icons/door.png");
@@ -112,7 +116,7 @@ public class ModMenu extends ScreenRenderer {
 
     @Override
     public void render(int mouseX, int mouseY, float tickDelta, float width, float height) {
-        if (this.screen == null) {
+        if (screen == null) {
             init(width, height);
         }
 

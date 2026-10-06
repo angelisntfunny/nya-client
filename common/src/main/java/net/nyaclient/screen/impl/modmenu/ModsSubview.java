@@ -12,6 +12,7 @@ package net.nyaclient.screen.impl.modmenu;
 
 import net.nyaclient.NyaClient;
 import net.nyaclient.module.IMod;
+import net.nyaclient.module.utility.ZoomMod;
 import net.nyaclient.neko.NekoFontRenderer;
 import net.nyaclient.neko.NekoRenderer;
 import net.nyaclient.platform.Services;
@@ -44,7 +45,10 @@ public class ModsSubview extends Subview {
             NekoRenderer.drawRoundedRect(renderX, renderY, modWidth, 75, 5, new Color(26, 26, 26));
             NekoFontRenderer.renderCenteredText(8, renderX + (modWidth/2f), renderY + 55, mod.getName(), new Color(255, 255, 255));
 
-            NekoRenderer.drawRoundedRectSpecifyRadius(renderX, renderY + 65, modWidth, 80 - 65, 0, 0, 5, 5, (mod.isEnabled() ? new Color(22, 255, 22, 170) : new Color(255, 22, 22, 110)));
+            NekoRenderer.drawRoundedRectSpecifyRadius(renderX, renderY + 65, modWidth, 80 - 65, 0, 0, 5, 5, (
+                    mod instanceof ZoomMod ? new Color(76, 76, 76) :
+                    mod.isEnabled() ? new Color(22, 255, 22, 170) :
+                        new Color(255, 22, 22, 110)));
             NekoFontRenderer.renderCenteredText(8, renderX + modWidth/2f, renderY + 65 + NekoFontRenderer.getTextHeight(8, "E")/3f + 5, mod.isEnabled() ? Services.MINECRAFT_BRIDGE.translate("term.enabled") : Services.MINECRAFT_BRIDGE.translate("term.disabled"), new Color(255, 255, 255));
 
             int handle = mod.getHandle();
@@ -142,15 +146,25 @@ public class ModsSubview extends Subview {
         float contentMouseY = (float) mouseY + scrollOffset;
 
         for (IMod mod : NyaClient.getInstance().getModManager().getMods()) {
-            boolean inside =
+            boolean insideToggle =
+                    mouseX >= renderX &&
+                            mouseX <= renderX + modWidth &&
+                            contentMouseY >= renderY + 65 &&
+                            contentMouseY <= renderY + modHeight;
+
+            boolean insideSettings =
                     mouseX >= renderX &&
                             mouseX <= renderX + modWidth &&
                             contentMouseY >= renderY &&
-                            contentMouseY <= renderY + modHeight;
+                            contentMouseY <= renderY + 65;
 
-            if (inside) {
+            if (insideToggle && !(mod instanceof ZoomMod)) {
                 mod.toggle();
                 return;
+            }
+
+            if (insideSettings) {
+                ModMenu.setSubview(new ModSettingsSubview(x, y, width, height, mod));
             }
 
             i++;
