@@ -15,7 +15,6 @@ public class ToggleSprint extends BasicHUDMod {
 
     @Subscribe
     private void onKey(EventKey event) {
-        this.key = null;
         if (event.key() == Key.KEY_LEFT_CONTROL && Services.MINECRAFT_BRIDGE.inGame())
             Services.MINECRAFT_BRIDGE.toggleSprint();
     }

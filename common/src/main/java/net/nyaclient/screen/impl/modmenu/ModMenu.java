@@ -136,7 +136,7 @@ public class ModMenu extends ScreenRenderer {
             drawIcon(icon, i, width, height);
         }
 
-        NekoFontRenderer.renderText(24,width / 2 - windowWidth + 70, height / 2 - windowHeight + 25, "Nya", Color.WHITE);
+        NekoFontRenderer.renderText(24,width / 2 - windowWidth + 55, height / 2 - windowHeight + 10, "Nya", Color.WHITE);
 
         if (screen != null) {
             screen.render(mouseX, mouseY, tickDelta, width, height);

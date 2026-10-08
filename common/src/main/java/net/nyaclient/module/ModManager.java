@@ -14,6 +14,7 @@ import net.nyaclient.enums.Key;
 import net.nyaclient.module.utility.ToggleSprint;
 import net.nyaclient.module.utility.ZoomMod;
 import net.nyaclient.module.visual.CPSMod;
+import net.nyaclient.module.visual.TwitchChat;
 import net.nyaclient.platform.Services;
 import net.nyaclient.screen.impl.HUDPositionerRenderer;
 
@@ -28,6 +29,7 @@ public class ModManager {
         MODS.add(new ZoomMod());
         MODS.add(new CPSMod());
         MODS.add(new ToggleSprint());
+        MODS.add(new TwitchChat());
     }
 
     public List<IMod> getMods() {

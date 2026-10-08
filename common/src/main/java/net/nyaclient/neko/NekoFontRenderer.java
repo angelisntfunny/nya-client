@@ -49,6 +49,7 @@ public class NekoFontRenderer {
         if (fontId == -1) return;
 
         NanoVG.nvgFillColor(NekoRenderer.getContext(), NekoRenderer.getColor(color));
+        NanoVG.nvgTextAlign(NekoRenderer.getContext(), NanoVG.NVG_ALIGN_LEFT | NanoVG.NVG_ALIGN_TOP);
         NanoVG.nvgFontFace(NekoRenderer.getContext(), FONT_PATH);
         NanoVG.nvgFontSize(NekoRenderer.getContext(), size);
         NanoVG.nvgText(NekoRenderer.getContext(), x, y, text);
