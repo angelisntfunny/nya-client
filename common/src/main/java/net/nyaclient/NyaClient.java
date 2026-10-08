@@ -14,14 +14,11 @@ import net.nyaclient.event.EventBus;
 import net.nyaclient.module.IMod;
 import net.nyaclient.module.ModManager;
 import net.nyaclient.neko.NekoRenderer;
-import net.nyaclient.option.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class NyaClient {
     private static NyaClient INSTANCE;
@@ -38,6 +35,8 @@ public class NyaClient {
 
     private EventBus EVENT_BUS;
     private ModManager MOD_MANAGER;
+
+    private boolean shutdown = false;
 
     public static void initialize() throws Exception {
         INSTANCE = new NyaClient();
@@ -56,6 +55,10 @@ public class NyaClient {
     }
 
     public void shutdown() {
+        if (shutdown)
+            return;
+
+        shutdown = true;
         NyaClient.getInstance().getModManager().getMods().forEach(IMod::cleanup);
         LOGGER.info("[core] finished shutdown");
     }

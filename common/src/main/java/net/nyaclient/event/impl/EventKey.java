@@ -11,7 +11,7 @@
 package net.nyaclient.event.impl;
 
 import net.nyaclient.event.Event;
-import net.nyaclient.keyboard.Key;
+import net.nyaclient.enums.Key;
 
 public record EventKey(Key key) implements Event {
 }

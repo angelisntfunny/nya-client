@@ -71,6 +71,14 @@ public class NekoRenderer {
         drawRect(right - thickness, top + thickness, thickness, bottom - top - (thickness * 2), color);
     }
 
+    public static void drawOutlineRounded(float x, float y, float width, float height, float thickness, float radius, Color color) {
+        NanoVG.nvgBeginPath(context);
+        NanoVG.nvgRoundedRect(context, x, y, width, height, radius);
+        NanoVG.nvgStrokeColor(context, getColor(color));
+        NanoVG.nvgStrokeWidth(context, thickness);
+        NanoVG.nvgStroke(context);
+    }
+
     public static void drawRoundedRectSpecifyRadius(float x, float y, float width, float height, float topLeft, float topRight, float bottomRight, float bottomLeft, Color color) {
         NanoVG.nvgBeginPath(context);
         NanoVG.nvgRoundedRectVarying(context, x, y, width, height, topLeft, topRight, bottomRight, bottomLeft);

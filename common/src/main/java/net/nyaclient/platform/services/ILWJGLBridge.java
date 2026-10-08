@@ -10,7 +10,7 @@
 
 package net.nyaclient.platform.services;
 
-import net.nyaclient.keyboard.Key;
+import net.nyaclient.enums.Key;
 
 public interface ILWJGLBridge {
     boolean isMousePressed(int button);

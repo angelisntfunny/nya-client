@@ -10,6 +10,8 @@
 
 package net.nyaclient.screen.impl.modmenu;
 
+import net.nyaclient.enums.Key;
+
 public abstract class Subview {
     public float x, y, width, height;
 
@@ -23,4 +25,6 @@ public abstract class Subview {
     public abstract void init(float width, float height);
     public abstract void render(float mouseX, float mouseY, float deltaTime, float width, float height);
     public abstract void onClick(double mouseX, double mouseY, int button, float width, float height);
+
+    public void onKey(Key key) {}
 }

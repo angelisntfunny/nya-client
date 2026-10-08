@@ -22,4 +22,7 @@ public interface IMinecraftBridge {
     void setCinematicCamera(boolean state);
 
     int getFov();
+    void toggleSprint();
+    boolean isSprintToggled();
+    boolean isSprinting();
 }

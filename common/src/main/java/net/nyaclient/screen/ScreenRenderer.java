@@ -10,9 +10,13 @@
 
 package net.nyaclient.screen;
 
+import net.nyaclient.enums.Key;
+
 public abstract class ScreenRenderer {
     public abstract void init(float width, float height);
     public abstract void render(int mouseX, int mouseY, float tickDelta, float width, float height);
     public abstract boolean mouseClicked(double mouseX, double mouseY, int button, float width, float height);
+
+    public void onKey(Key key) {}
     public void close() {}
 }

@@ -11,7 +11,7 @@
 package net.nyaclient.services;
 
 import net.minecraft.client.Minecraft;
-import net.nyaclient.keyboard.Key;
+import net.nyaclient.enums.Key;
 import net.nyaclient.platform.services.ILWJGLBridge;
 import net.nyaclient.util.KeyTranslator;
 import net.nyaclient.util.MouseHelper;

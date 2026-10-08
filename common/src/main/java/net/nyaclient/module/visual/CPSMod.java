@@ -10,12 +10,11 @@
 
 package net.nyaclient.module.visual;
 
-import net.nyaclient.keyboard.Key;
+import net.nyaclient.enums.Key;
 import net.nyaclient.module.BasicHUDMod;
 import net.nyaclient.module.ModCategory;
 import net.nyaclient.platform.Services;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;

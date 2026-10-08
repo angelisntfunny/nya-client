@@ -10,7 +10,8 @@
 
 package net.nyaclient.module;
 
-import net.nyaclient.keyboard.Key;
+import net.nyaclient.enums.Key;
+import net.nyaclient.module.utility.ToggleSprint;
 import net.nyaclient.module.utility.ZoomMod;
 import net.nyaclient.module.visual.CPSMod;
 import net.nyaclient.platform.Services;
@@ -26,6 +27,7 @@ public class ModManager {
     public ModManager() {
         MODS.add(new ZoomMod());
         MODS.add(new CPSMod());
+        MODS.add(new ToggleSprint());
     }
 
     public List<IMod> getMods() {

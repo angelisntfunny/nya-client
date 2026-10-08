@@ -24,17 +24,18 @@ public abstract class BasicHUDMod extends HUDMod {
 
     @Override
     public float getWidth() {
-        return NekoFontRenderer.getTextWidth(10, getString()) + 5;
+        return NekoFontRenderer.getTextWidth(9, getString()) + 5;
     }
 
     @Override
     public float getHeight() {
-        return NekoFontRenderer.getTextHeight(10) + 5;
+        return NekoFontRenderer.getTextHeight(9) + 5;
     }
 
     @Override
     public void render() {
-        NekoRenderer.drawRect(x, y, getWidth(), getHeight(), new Color(0, 0, 0, 110));
-        NekoFontRenderer.renderCenteredText(10, x+(getWidth()/2f), y+(getHeight()/2f), getString(), Color.WHITE);
+        NekoRenderer.drawRoundedRect(x, y, getWidth(), getHeight(), 3, new Color(0, 0, 0, 110));
+        NekoRenderer.drawOutlineRounded(x, y, getWidth(), getHeight(), 1, 3, new Color(255, 255, 255, 40));
+        NekoFontRenderer.renderCenteredText(9, x+(getWidth()/2f), y+(getHeight()/2f), getString(), Color.WHITE);
     }
 }

@@ -3,6 +3,8 @@
   "category.nyaclient": "Nya Client",
   "mods.cpsdisplay": "CPS Display",
   "mods.zoom": "Zoom",
+  "mods.togglesprint": "Toggle Sprint",
+  "mods.twitchchat": "Twitch Chat",
   "term.disabled": "Disabled",
   "term.enabled": "Enabled"
 }

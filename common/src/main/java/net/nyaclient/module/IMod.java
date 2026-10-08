@@ -10,7 +10,7 @@
 
 package net.nyaclient.module;
 
-import net.nyaclient.keyboard.Key;
+import net.nyaclient.enums.Key;
 import net.nyaclient.option.Value;
 
 import java.util.List;

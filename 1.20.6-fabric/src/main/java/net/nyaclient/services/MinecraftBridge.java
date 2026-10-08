@@ -18,6 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.nyaclient.neko.NekoRenderer;
 import net.nyaclient.platform.services.IMinecraftBridge;
 import net.nyaclient.screen.ScreenRenderer;
+import net.nyaclient.util.KeyTranslator;
 
 public class MinecraftBridge implements IMinecraftBridge {
     @Override
@@ -65,6 +66,12 @@ public class MinecraftBridge implements IMinecraftBridge {
                 super.removed();
                 renderer.close();
             }
+
+            @Override
+            public boolean keyPressed(int i, int j, int k) {
+                renderer.onKey(KeyTranslator.getKeyFromInteger(i));
+                return super.keyPressed(i, j, k);
+            }
         });
     }
 
@@ -81,5 +88,21 @@ public class MinecraftBridge implements IMinecraftBridge {
     @Override
     public int getFov() {
         return Minecraft.getInstance().options.fov().get();
+    }
+
+    @Override
+    public void toggleSprint() {
+        Minecraft.getInstance().options.toggleSprint().set(!Minecraft.getInstance().options.toggleSprint().get());
+    }
+
+    @Override
+    public boolean isSprintToggled() {
+        return Minecraft.getInstance().options.toggleSprint().get();
+    }
+
+    @Override
+    public boolean isSprinting() {
+        if (!inGame()) return false;
+        return Minecraft.getInstance().player != null && Minecraft.getInstance().player.isSprinting();
     }
 }

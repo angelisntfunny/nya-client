@@ -11,6 +11,7 @@
 package net.nyaclient.screen.impl.modmenu;
 
 import net.nyaclient.NyaClient;
+import net.nyaclient.enums.Key;
 import net.nyaclient.neko.NekoFontRenderer;
 import net.nyaclient.neko.NekoRenderer;
 import net.nyaclient.platform.Services;
@@ -190,5 +191,10 @@ public class ModMenu extends ScreenRenderer {
         }
 
         return false;
+    }
+
+    @Override
+    public void onKey(Key key) {
+        screen.onKey(key);
     }
 }

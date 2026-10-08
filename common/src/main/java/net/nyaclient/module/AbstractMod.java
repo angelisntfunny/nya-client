@@ -12,8 +12,9 @@ package net.nyaclient.module;
 
 import com.google.gson.annotations.Expose;
 import net.nyaclient.NyaClient;
-import net.nyaclient.keyboard.Key;
+import net.nyaclient.enums.Key;
 import net.nyaclient.neko.NekoRenderer;
+import net.nyaclient.option.KeyValue;
 import net.nyaclient.option.Value;
 import net.nyaclient.platform.Services;
 import net.nyaclient.util.IOUtils;
@@ -43,11 +44,20 @@ public class AbstractMod implements IMod {
     @Expose(deserialize = false)
     protected final String name;
 
-    public AbstractMod(String term, String iconPath, ModCategory category) {
+    public AbstractMod(String term, String iconPath, ModCategory category, Key key) {
         this.name = term;
         this.iconPath = iconPath;
         this.category = category;
+        this.key = key;
+
+        this.values.add(new KeyValue("Keybind", this.key));
     }
+
+    public AbstractMod(String term, String iconPath, ModCategory category) {
+        this(term, iconPath, category, Key.KEY_NONE);
+    }
+
+
 
     @Override
     public void toggle() {

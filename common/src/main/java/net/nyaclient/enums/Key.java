@@ -8,7 +8,11 @@
  * You should have received a copy of the GNU General Public License along with Nya Client. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.nyaclient.keyboard;
+package net.nyaclient.enums;
+
+import net.nyaclient.util.StringUtils;
+
+import java.util.Locale;
 
 public enum Key {
     KEY_A,
@@ -48,7 +52,53 @@ public enum Key {
     KEY_8,
     KEY_9,
     KEY_RIGHT_SHIFT,
+    KEY_LEFT_SHIFT,
     KEY_SPACE,
     KEY_ALT,
-    KEY_NONE
+    KEY_LEFT_CONTROL,
+    KEY_RIGHT_CONTROL,
+    KEY_RIGHT_ALT,
+    KEY_COMMA,
+    KEY_PERIOD,
+    KEY_SLASH,
+    KEY_ENTER,
+    KEY_BACKSLASH,
+    KEY_BACKSPACE,
+    KEY_EQUALS,
+    KEY_MINUS,
+    KEY_SEMICOLON,
+    KEY_SINGLE_APOSTROPHE,
+    KEY_CAPS_LOCK,
+    KEY_TAB,
+    KEY_F1,
+    KEY_F2,
+    KEY_F3,
+    KEY_F4,
+    KEY_F5,
+    KEY_F6,
+    KEY_F7,
+    KEY_F8,
+    KEY_F9,
+    KEY_F10,
+    KEY_F11,
+    KEY_F12,
+    KEY_GRAVE,
+    KEY_ESCAPE,
+    KEY_PRINT_SCREEN,
+    KEY_SCROLL_LOCK,
+    KEY_INSERT,
+    KEY_HOME,
+    KEY_PAGE_UP,
+    KEY_DELETE,
+    KEY_END,
+    KEY_PAGE_DOWN,
+    KEY_LEFT_ARROW,
+    KEY_UP_ARROW,
+    KEY_RIGHT_ARROW,
+    KEY_DOWN_ARROW,
+    KEY_NONE;
+
+    public String getName() {
+        return StringUtils.capitalizeText(this.name().replace("KEY_", "").replace("_", " ").replace("_", " ").toLowerCase(Locale.ROOT));
+    }
 }
