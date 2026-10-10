@@ -23,16 +23,6 @@ import java.io.IOException;
 public class NyaClient {
     private static NyaClient INSTANCE;
     public static final Logger LOGGER = LoggerFactory.getLogger("nya~!");
-
-//    public static final Gson GSON = new GsonBuilder()
-//            .setPrettyPrinting()
-//            .registerTypeAdapterFactory(
-//                    RuntimeTypeAdapterFactory.of(Value.class, "type")
-//                            .registerSubtype(BooleanValue.class, "boolean")
-//            )
-//            .excludeFieldsWithoutExposeAnnotation()
-//            .create();
-
     private EventBus EVENT_BUS;
     private ModManager MOD_MANAGER;
 

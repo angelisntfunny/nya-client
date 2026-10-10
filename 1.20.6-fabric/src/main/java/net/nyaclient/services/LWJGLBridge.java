@@ -26,6 +26,7 @@ public class LWJGLBridge implements ILWJGLBridge {
     @Override
     public boolean isKeyDown(Key key) {
         if (key == Key.KEY_NONE) return false;
+        
         return GLFW.glfwGetKey(Minecraft.getInstance().getWindow().getWindow(), KeyTranslator.getIntegerFromKey(key)) == GLFW.GLFW_PRESS;
     }
 

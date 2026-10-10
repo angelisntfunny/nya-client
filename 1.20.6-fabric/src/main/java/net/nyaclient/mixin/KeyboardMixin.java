@@ -13,6 +13,7 @@ package net.nyaclient.mixin;
 import net.minecraft.client.KeyboardHandler;
 import net.minecraft.client.Minecraft;
 import net.nyaclient.NyaClient;
+import net.nyaclient.enums.Key;
 import net.nyaclient.event.impl.EventKey;
 import net.nyaclient.util.KeyTranslator;
 import org.lwjgl.glfw.GLFW;
@@ -24,14 +25,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(KeyboardHandler.class)
 public class KeyboardMixin {
     @Inject(method = "keyPress", at = @At("HEAD"))
-    private void onKey(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
-        if (key == GLFW.GLFW_KEY_UNKNOWN || Minecraft.getInstance().screen != null ||
+    private void onKey(long window, int keycode, int scancode, int action, int modifiers, CallbackInfo ci) {
+        if (keycode == GLFW.GLFW_KEY_UNKNOWN || Minecraft.getInstance().screen != null ||
             Minecraft.getInstance().player == null || Minecraft.getInstance().level == null)
                 return;
 
         if (action == GLFW.GLFW_PRESS) {
-            NyaClient.getInstance().getEventBus().call(new EventKey(KeyTranslator.getKeyFromInteger(key)));
-            NyaClient.getInstance().getModManager().onKey(KeyTranslator.getKeyFromInteger(key));
+            Key key = KeyTranslator.getKeyFromInteger(keycode);
+
+            if (key == Key.KEY_NONE) return;
+
+            NyaClient.getInstance().getEventBus().call(new EventKey(key));
+            NyaClient.getInstance().getModManager().onKey(key);
         }
     }
 }

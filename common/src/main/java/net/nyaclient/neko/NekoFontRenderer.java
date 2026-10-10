@@ -16,6 +16,7 @@ import org.lwjgl.nanovg.NanoVG;
 import java.awt.*;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Optional;
 
 public class NekoFontRenderer {
     @SuppressWarnings("FieldCanBeLocal")
@@ -55,28 +56,27 @@ public class NekoFontRenderer {
         NanoVG.nvgText(NekoRenderer.getContext(), x, y, text);
     }
 
-    public static float getTextWidth(float size, String text) {
-        if (fontId == -1) return 0;
+    private static Optional<float[]> getBounds(float size, String text) {
+        if (fontId == -1) return Optional.empty();
 
         NanoVG.nvgFontFace(NekoRenderer.getContext(), FONT_PATH);
         NanoVG.nvgFontSize(NekoRenderer.getContext(), size);
 
         float[] bounds = new float[4];
         NanoVG.nvgTextBounds(NekoRenderer.getContext(), 0, 0, text, bounds);
+        return Optional.of(bounds);
+    }
 
-        return bounds[2] - bounds[0]; // right - left
+    public static float getTextWidth(float size, String text) {
+        Optional<float[]> bounds = getBounds(size, text);
+        if (bounds.isEmpty()) throw new IllegalStateException("font uninitialized");
+        return bounds.get()[2] - bounds.get()[0]; // right - left
     }
 
     public static float getTextHeight(float size, String text) {
-        if (fontId == -1) return 0;
-
-        NanoVG.nvgFontFace(NekoRenderer.getContext(), FONT_PATH);
-        NanoVG.nvgFontSize(NekoRenderer.getContext(), size);
-
-        float[] bounds = new float[4];
-        NanoVG.nvgTextBounds(NekoRenderer.getContext(), 0, 0, text, bounds);
-
-        return bounds[3] - bounds[1]; // bottom - top
+        Optional<float[]> bounds = getBounds(size, text);
+        if (bounds.isEmpty()) throw new IllegalStateException("font uninitialized");
+        return bounds.get()[3] - bounds.get()[1]; // bottom - top
     }
 
     public static float getTextHeight(float size) {

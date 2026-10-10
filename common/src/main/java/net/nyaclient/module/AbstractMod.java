@@ -35,9 +35,9 @@ public class AbstractMod implements IMod {
     @Expose
     protected boolean enabled;
     @Expose
-    protected Key key = Key.KEY_NONE;
+    protected Key key;
     @Expose
-    protected List<Value<?>> values = new ArrayList<>();
+    protected final List<Value<?>> values = new ArrayList<>();
 
     protected final ModCategory category;
 
@@ -117,10 +117,11 @@ public class AbstractMod implements IMod {
             onDisable();
         }
     }
-
+    
     @Override
     public void cleanup() {
-
+        NanoVG.nvgDeleteImage(NekoRenderer.getContext(), handle);
+        NyaClient.LOGGER.info("[core] cleanup finished for {} mod", name);
     }
 
     @Override
