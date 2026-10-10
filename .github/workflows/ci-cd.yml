@@ -68,6 +68,7 @@ jobs:
           prerelease: true
           files: |
             1.20.6-fabric/build/libs/*.jar
+            !1.20.6-fabric/build/libs/*-sources.jar
 
       - name: Upload Mod Jars to Release Please Release
         if: steps.release.outputs.release_created == 'true'
