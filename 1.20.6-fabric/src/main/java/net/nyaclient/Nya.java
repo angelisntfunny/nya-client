@@ -36,6 +36,7 @@ public class Nya implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> NyaClient.getInstance().getEventBus().call(new EventUpdate()));
 
+
         HudRenderCallback.EVENT.register((graphics, delta) -> {
             NekoRenderer.render(() -> NyaClient.getInstance().getModManager().getHUDMods().forEach(IHUDMod::render));
             NyaClient.getInstance().getEventBus().call(new EventRender(delta/*rune*/, Minecraft.getInstance().getWindow().getGuiScaledWidth(), Minecraft.getInstance().getWindow().getGuiScaledHeight()));

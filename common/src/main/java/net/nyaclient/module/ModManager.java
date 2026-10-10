@@ -11,6 +11,7 @@
 package net.nyaclient.module;
 
 import net.nyaclient.enums.Key;
+import net.nyaclient.module.utility.CoordinatesMod;
 import net.nyaclient.module.utility.ToggleSprint;
 import net.nyaclient.module.utility.ZoomMod;
 import net.nyaclient.module.visual.CPSMod;
@@ -30,6 +31,7 @@ public class ModManager {
         MODS.add(new CPSMod());
         MODS.add(new ToggleSprint());
         MODS.add(new TwitchChat());
+        MODS.add(new CoordinatesMod());
     }
 
     public List<IMod> getMods() {

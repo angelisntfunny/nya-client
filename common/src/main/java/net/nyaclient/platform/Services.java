@@ -14,6 +14,7 @@ import net.nyaclient.NyaClient;
 import net.nyaclient.platform.services.ILWJGLBridge;
 import net.nyaclient.platform.services.IMinecraftBridge;
 import net.nyaclient.platform.services.INanoVGBridge;
+import net.nyaclient.platform.services.IPlayerBridge;
 
 import java.util.ServiceLoader;
 
@@ -21,6 +22,7 @@ public class Services {
     public static final INanoVGBridge NANOVG_BRIDGE;
     public static final ILWJGLBridge LWJGL_BRIDGE;
     public static final IMinecraftBridge MINECRAFT_BRIDGE;
+    public static final IPlayerBridge PLAYER_BRIDGE;
 
     public static <T> T load(Class<T> clazz) {
         final T loadedService = ServiceLoader.load(clazz)
@@ -34,5 +36,6 @@ public class Services {
         NANOVG_BRIDGE = load(INanoVGBridge.class);
         LWJGL_BRIDGE = load(ILWJGLBridge.class);
         MINECRAFT_BRIDGE = load(IMinecraftBridge.class);
+        PLAYER_BRIDGE = load(IPlayerBridge.class);
     }
 }

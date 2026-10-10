@@ -68,7 +68,7 @@ public class NekoFontRenderer {
     }
 
     public static float getTextWidth(float size, String text) {
-        Optional<float[]> bounds = getBounds(size, text);
+        Optional<float[]> bounds = getBounds(size, text.replace(" ", "_"));
         if (bounds.isEmpty()) throw new IllegalStateException("font uninitialized");
         return bounds.get()[2] - bounds.get()[0]; // right - left
     }
