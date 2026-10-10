@@ -18,6 +18,9 @@ public class TwitchChat extends HUDMod {
             "Who else watching this at 3am",
             "No limit to the larp",
             "Is this roblox",
+            "Is this real",
+            "You stole my idea",
+            "I'm your tightest fan :heart:",
             "Love from tel aviv",
             "Big yahu impressed",
             "Hi (sorry for bad english)",
@@ -44,7 +47,8 @@ public class TwitchChat extends HUDMod {
             "Here from google giggles",
             "Bro they frying yo shi on google giggles",
             "I'm so gassy",
-            "Im giggling"
+            "Im giggling",
+            "This video is supported by {{user}}"
     );
     private final List<Message> MESSAGES = new ArrayList<>();
 
@@ -77,8 +81,8 @@ public class TwitchChat extends HUDMod {
         return 25;
     }
 
-    private static final long FADE_START_MS = 5000;
-    private static final long FADE_DURATION_MS = 2000;
+    private static final long FADE_START_MS = 7000;
+    private static final long FADE_DURATION_MS = 4000;
 
     // for some reason the bad code always works
     @Override
@@ -109,7 +113,7 @@ public class TwitchChat extends HUDMod {
 
             NekoFontRenderer.renderText(8, textX, currentY, message.user + ": ", userColor);
             textX += NekoFontRenderer.getTextWidth(8, message.user + ": ");
-            NekoFontRenderer.renderText(8, textX, currentY, message.message, new Color(255, 255, 255, alpha));
+            NekoFontRenderer.renderText(8, textX, currentY, message.message.replace("{{user}}", message.user), new Color(255, 255, 255, alpha));
 
             currentY -= NekoFontRenderer.getTextHeight(8) + 2;
         }

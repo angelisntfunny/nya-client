@@ -11,6 +11,7 @@
 package net.nyaclient.screen.impl;
 
 import net.nyaclient.NyaClient;
+import net.nyaclient.module.HUDMod;
 import net.nyaclient.module.IHUDMod;
 import net.nyaclient.neko.NekoFontRenderer;
 import net.nyaclient.neko.NekoRenderer;
@@ -31,7 +32,11 @@ public class HUDPositionerRenderer extends ScreenRenderer {
         NekoRenderer.drawRect(0, 0, width, height, new Color(0, 0, 0, 110));
 
         NyaClient.getInstance().getModManager().getHUDMods().forEach(IHUDMod::render);
-        NyaClient.getInstance().getModManager().getHUDMods().forEach(m -> m.drag(mouseX, mouseY));
+
+        for (IHUDMod mod : NyaClient.getInstance().getModManager().getHUDMods()) {
+            if (mod.drag(mouseX, mouseY))
+                break;
+        }
 
         NekoRenderer.drawRoundedRect(width / 2 - 45, height / 2 - 15, 90, 30, 5, new Color(0, 0, 0, 80));
         NekoFontRenderer.renderCenteredText(15, width / 2.0f, height / 2.0f, "Mods", new Color(255, 255, 255, 255));

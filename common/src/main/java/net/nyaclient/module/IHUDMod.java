@@ -12,7 +12,7 @@ package net.nyaclient.module;
 
 public interface IHUDMod extends IMod {
     void render();
-    void drag(int mouseX, int mouseY);
+    boolean drag(int mouseX, int mouseY);
     float getWidth();
     float getHeight();
 }

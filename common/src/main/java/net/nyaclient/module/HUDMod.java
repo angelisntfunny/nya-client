@@ -33,24 +33,32 @@ public abstract class HUDMod extends AbstractMod implements IHUDMod {
     public abstract void render();
 
     @Override
-    public void drag(int mouseX, int mouseY) {
+    public boolean drag(int mouseX, int mouseY) {
+        if (this.dragging || ((mouseX >= this.getX() && mouseX <= this.getX() + getWidth()) &&
+                (mouseY >= this.getY() && mouseY <= this.getY() + getHeight()))) {
+            NekoRenderer.drawOutline(x - 5, y - 5, x + getWidth() + 5, y + getHeight() + 5, 2, new Color(0, 0, 0, 112));
+        }
         if (this.dragging) {
             this.x = mouseX + this.lastX;
             this.y = mouseY + this.lastY;
 
             if (!Services.LWJGL_BRIDGE.isMousePressed(0))
                 this.dragging = false;
+
+            return true;
         }
 
         if ((mouseX >= this.getX() && mouseX <= this.getX() + getWidth()) &&
                 (mouseY >= this.getY() && mouseY <= this.getY() + getHeight())) {
-            NekoRenderer.drawOutline(x - 5, y - 5, x + getWidth() + 5, y + getHeight() + 5, 2, new Color(0, 0, 0, 112));
             if (Services.LWJGL_BRIDGE.isMousePressed(0) && !this.dragging) {
                 this.lastX = this.x - mouseX;
                 this.lastY = this.y - mouseY;
                 this.dragging = true;
+                return true;
             }
         }
+
+        return false;
     }
 
     public float getX() {
